@@ -1,0 +1,1895 @@
+{UTF-8}
+Additional Ae mortality=
+	Adult Ae*Suppression factor*Suppression Month value
+	~	Aedes/Month
+	~		|
+
+H D Infections=
+	Susceptible Humans*Force of infection H Dengue
+	~	People/Month
+	~		|
+
+H Deaths=
+	Susceptible Humans/Life expectancy
+	~	People/Month
+	~		|
+
+H YF Infections=
+	Susceptible Humans*Force of infection H YellowFever
+	~	People/Month
+	~		|
+
+D Reproduction Number Ae=
+	(Biting rate ae^2)*Human feeding fraction ae*Transmission prob D H to M ae*Transmission prob D M to H ae\
+		*(Total Adult Ae
+	/Human population 1)*EXP( -(Adult Mortality rate ae*EIP D Ae))/(Adult Mortality rate ae\
+		*Recovery rate H)
+	~	
+	~		|
+
+D Reproduction Number Albo=
+	(Biting rate albo^2)*Human feeding fraction albo*Transmission prob D H to M albo*Transmission prob D M to H albo\
+		*(Total Adult Albo
+	/Human population 1)*EXP( -(Adult Mortality rate albo*EIP D Albo))/(Adult Mortality rate albo\
+		*Recovery rate H)
+	~	1/Aedes
+	~		|
+
+Dengue become Infectious Ae=
+	Exposed Dengue Ae/EIP D Ae
+	~	Aedes/Month
+	~		|
+
+Dengue become Infectious Albo=
+	Exposed Dengue ALbo/EIP D Albo
+	~	Aedes/Month
+	~		|
+
+Human feeding fraction ae=
+	0.9/30
+	~	Dmnl
+	~		|
+
+Human feeding fraction albo=
+	0.6/30
+	~	Dmnl
+	~		|
+
+Adult Mortality rate ae=
+	1/Adult life ae
+	~	1/Month
+	~		|
+
+Adult Mortality rate ae Chi=
+	1/Adult life ae
+	~	1/Month
+	~		|
+
+Adult Mortality rate ae YF=
+	1/Adult life ae
+	~	1/Month
+	~		|
+
+Adult Mortality rate albo=
+	1/Adult life albo
+	~	1/Day
+	~		|
+
+Adult Mortality rate albo Chi=
+	1/Adult life albo
+	~	1/Month
+	~		|
+
+Adult Mortality rate albo YF=
+	1/Adult life albo
+	~	1/Month
+	~		|
+
+Aedes infections Ae=
+	FoI D Mosq ae*Susceptible Ae
+	~	Aedes/Month
+	~		|
+
+Aedes infections Albo=
+	FoI D Mosq albo*Susceptible Albo
+	~	Aedes/Month
+	~		|
+
+Transmission potential ae=
+	Adult Ae*Biting rate ae*Human feeding fraction ae*Vector competence ae
+	~	1/Month
+	~		|
+
+EIP Chi Ae=
+	(5/Temperature Suitability Ae)/30
+	~	Month
+	~		|
+
+EIP Chi Albo=
+	(6/Temp Suitability Albo)/30
+	~	Month
+	~		|
+
+Birth rate=
+	0.00456
+	~	1/Month
+	~		|
+
+Biting rate ae=
+	0.5/30
+	~	1/Aedes/Month
+	~		|
+
+Biting rate albo=
+	0.4/30
+	~	1/(Aedes*Month)
+	~		|
+
+"Mortality E-C Ae"=
+	Exposed Chikungunya Ae/Adult life ae
+	~	Aedes/Month
+	~		|
+
+"Mortality E-C Albo 0"=
+	Exposed Chikungunya Albo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+Chi Infectious period=
+	7/30
+	~	Month
+	~		|
+
+Chi Recovery rate=
+	Chikungunya Infectious Human/Chi Infectious period
+	~	People/Month
+	~		|
+
+Chi Recovery rate H=
+	1/Chi Infectious period
+	~	1/Month
+	~		|
+
+Chi Reproduction Number Ae=
+	(Biting rate ae^2)*Human feeding fraction ae*Transmission prob Chik H to M ae*Transmission prob Chi M to H ae\
+		*(Total Adult Ae
+	/Human population 1)*EXP( -(Adult Mortality rate ae Chi*EIP Chi Ae))/(Adult Mortality rate ae Chi\
+		*Chi Recovery rate H)
+	~	
+	~		|
+
+Chi Reproduction Number Albo=
+	(Biting rate albo^2)*Human feeding fraction albo*Transmission prob Chik H to M albo*\
+		Transmission prob Chi M to H albo*(Total Adult Albo
+	/Human population 1)*EXP( -(Adult Mortality rate albo Chi*EIP Chi Albo))/(Adult Mortality rate albo Chi\
+		*Chi Recovery rate H
+	)
+	~	1/Aedes
+	~		|
+
+Chik Force of infection Mosquito=
+	FoI Chik Mosq ae+FoI Chik Mosq albo
+	~	1/Month
+	~		|
+
+Chik Infectious Ae=
+	FoI Chik Mosq ae*Susceptible Ae
+	~	Aedes/Month
+	~		|
+
+Chik Infectious Albo=
+	FoI Chik Mosq albo*Susceptible Albo
+	~	Aedes/Month
+	~		|
+
+Chik Prog to Infectious=
+	Chikungunya Exposed Humans/Chiku Human incubation period
+	~	People/Month
+	~		|
+
+Chiku Human incubation period=
+	5/30
+	~	Month
+	~		|
+
+Chikungunya become Infectious Ae=
+	Exposed Chikungunya Ae/EIP Chi Ae
+	~	Aedes/Month
+	~		|
+
+Chikungunya become Infectious Albo=
+	Exposed Chikungunya Albo/EIP Chi Albo
+	~	Aedes/Month
+	~		|
+
+Chikungunya Exposed Humans= INTEG (
+	H Chi Infections-Chik Prog to Infectious,
+		0)
+	~	People
+	~		|
+
+Chikungunya Infectious Human= INTEG (
+	Chik Prog to Infectious-Chi Recovery rate,
+		0)
+	~	People
+	~		|
+
+Chikungunya Recovered Humans= INTEG (
+	Chi Recovery rate,
+		0)
+	~	People
+	~		|
+
+"Chikungunya Reproduction Number(R0)"=
+	Chi Reproduction Number Ae+Chi Reproduction Number Albo
+	~	Dmnl
+	~		|
+
+FoI YF Mosq albo=
+	Biting rate albo*Human feeding fraction albo*Transmission prob YF H to M albo*(YellowFever Infectious Human\
+		/MAX(1, Human population 1
+	))
+	~	1/Month
+	~		|
+
+Force of infection H CHikungunya=
+	FoI H ae D+FoI H albo D
+	~	1/Month
+	~		|
+
+Force of infection H Dengue=
+	FoI H ae+FoI H albo
+	~	1/Month
+	~		|
+
+D Force of infection Mosquito=
+	FoI D Mosq ae+FoI D Mosq albo
+	~	1/Month
+	~		|
+
+D Infectious period=
+	7/30
+	~	Month
+	~		|
+
+D Prog to Infectious=
+	Dengue Exposed Humans/Dengue Human incubation period
+	~	People/Month
+	~		|
+
+D Recovery rate=
+	Dengue Infectious Human/D Infectious period
+	~	People/Month
+	~		|
+
+D Recovery rate 1=
+	YellowFever Infectious Human/YellowFever Infectious period
+	~	People/Month
+	~		|
+
+Exposed Dengue Ae= INTEG (
+	Aedes infections Ae-Dengue become Infectious Ae-Mortality ED Ae,
+		0)
+	~	Aedes
+	~		|
+
+Exposed Dengue ALbo= INTEG (
+	Aedes infections Albo-Dengue become Infectious Albo-Mortality ED Albo,
+		0)
+	~	Aedes
+	~		|
+
+Recovery rate H=
+	1/D Infectious period
+	~	1/Month
+	~		|
+
+Recovery rate H YF=
+	1/YellowFever Infectious period
+	~	1/Month
+	~		|
+
+Dengue Exposed Humans= INTEG (
+	H D Infections-D Prog to Infectious,
+		0)
+	~	People
+	~		|
+
+Dengue Human incubation period=
+	5/30
+	~	Month
+	~		|
+
+Dengue Infectious Human= INTEG (
+	D Prog to Infectious-D Recovery rate,
+		0)
+	~	People
+	~		|
+
+Dengue Recovered Humans= INTEG (
+	D Recovery rate,
+		0)
+	~	People
+	~		|
+
+"Dengue Reproduction Number(R0)"=
+	D Reproduction Number Ae+D Reproduction Number Albo
+	~	Dmnl
+	~		|
+
+Infectious Chikungunya Albo= INTEG (
+	Chikungunya become Infectious Albo-"Mortality I-C Albo",
+		0)
+	~	Aedes
+	~		|
+
+Infectious Dengue Ae= INTEG (
+	Dengue become Infectious Ae-Mortality ID Ae,
+		0)
+	~	Aedes
+	~		|
+
+Total Adult Ae=
+	Exposed Chikungunya Ae+Exposed Dengue Ae+Exposed YellowFever Ae+Infectious Chikungunya Ae\
+		+Infectious Dengue Ae+Infectious YellowFever Ae+Susceptible Ae
+	~	Aedes
+	~		|
+
+Total Adult Albo=
+	Exposed Chikungunya Albo+Exposed Dengue ALbo+Exposed YellowFever Albo+Infectious Chikungunya Albo\
+		+Infectious Dengue Albo+Infectious YellowFever Albo+Susceptible Albo
+	~	Aedes
+	~		|
+
+Total transmission potential=
+	Transmission potential ae+Transmission potential albo
+	~	1/Month
+	~		|
+
+FoI YF Mosq ae=
+	Biting rate ae*Human feeding fraction ae*Transmission prob YF H to M ae*(YellowFever Infectious Human\
+		/MAX(1, Human population 1
+	))
+	~	1/Month
+	~		|
+
+YellowFever Recovered Humans= INTEG (
+	D Recovery rate 1,
+		0)
+	~	People
+	~		|
+
+Transmission potential albo=
+	Adult Albo*Biting rate albo*Human feeding fraction albo*Vector competence albo
+	~	1/Month
+	~		|
+
+EIP D Ae=
+	(8/Temperature Suitability Ae)/30
+	~	Month
+	~		|
+
+EIP D Albo=
+	(9/Temp Suitability Albo)/30
+	~	Month
+	~		|
+
+EIP YF Ae=
+	(12/Temperature Suitability Ae)/30
+	~	Month
+	~		|
+
+EIP YF Albo=
+	(13/Temp Suitability Albo)/30
+	~	Month
+	~		|
+
+Exposed Chikungunya Ae= INTEG (
+	Chik Infectious Ae-Chikungunya become Infectious Ae-"Mortality E-C Ae",
+		0)
+	~	Aedes
+	~		|
+
+Exposed Chikungunya Albo= INTEG (
+	Chik Infectious Albo-Chikungunya become Infectious Albo-"Mortality E-C Albo 0",
+		0)
+	~	Aedes
+	~		|
+
+"Mortality E-YF Ae"=
+	Exposed YellowFever Ae/Adult life ae
+	~	Aedes/Month
+	~		|
+
+"Mortality E-YF Albo"=
+	Exposed YellowFever Albo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+Exposed YellowFever Ae= INTEG (
+	YF M Infectious Ae-"Mortality E-YF Ae"-Yellowfever become Infectious Ae,
+		0)
+	~	Aedes
+	~		|
+
+Exposed YellowFever Albo= INTEG (
+	YF M Infectious Albo-"Mortality E-YF Albo"-Yellowfever become Infectious Albo,
+		0)
+	~	Aedes
+	~		|
+
+FoI Chik Mosq ae=
+	Biting rate ae*Human feeding fraction ae*Transmission prob Chik H to M ae*(Chikungunya Infectious Human\
+		/MAX(1, Human population 1
+	))
+	~	1/Month
+	~		|
+
+FoI Chik Mosq albo=
+	Biting rate albo*Human feeding fraction albo*Transmission prob Chik H to M albo*(Chikungunya Infectious Human\
+		/MAX(1, Human population 1
+	))
+	~	1/Month
+	~		|
+
+FoI D Mosq ae=
+	Biting rate ae*Human feeding fraction ae*Transmission prob D H to M ae*(Dengue Infectious Human\
+		/MAX(1, Human population 1))
+	~	1/Month
+	~		|
+
+FoI D Mosq albo=
+	Biting rate albo*Human feeding fraction albo*Transmission prob D H to M albo*(Dengue Infectious Human\
+		/MAX(1, Human population 1))
+	~	1/Month
+	~		|
+
+FoI H ae=
+	Biting rate ae*Human feeding fraction ae*Transmission prob D M to H ae*(1/MAX(1, Human population 1\
+		))
+	~	1/Month
+	~		|
+
+FoI H ae D=
+	Biting rate ae*Human feeding fraction ae*Transmission prob Chi M to H ae*(1/MAX(1, Human population 1\
+		))
+	~	1/Month
+	~		|
+
+FoI H ae YF=
+	Biting rate ae*Human feeding fraction ae*Transmission prob YF M to H ae*(1/MAX(1, Human population 1\
+		))
+	~	1/Month
+	~		|
+
+FoI H albo=
+	Biting rate albo*Human feeding fraction albo*Transmission prob D M to H albo*(Infectious Dengue Albo\
+		/MAX(1, Human population 1))
+	~	1/Month
+	~		|
+
+FoI H albo D=
+	Biting rate albo*Human feeding fraction albo*Transmission prob Chi M to H albo*(Infectious Chikungunya Albo\
+		/MAX(1, Human population 1
+	))
+	~	1/Month
+	~		|
+
+FoI H albo YF=
+	Biting rate albo*Human feeding fraction albo*Transmission prob YF M to H albo*(Infectious YellowFever Albo\
+		/MAX(1, Human population 1
+	))
+	~	1/Month
+	~		|
+
+YellowFever Infectious period=
+	7/30
+	~	Month
+	~		|
+
+Mortality ED Albo=
+	Exposed Dengue ALbo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+"YellowFever Reproduction Number(R0)"=
+	YF Reproduction Number Ae+YF Reproduction Number Albo
+	~	Dmnl
+	~		|
+
+YF Force of infection Mosquito=
+	FoI YF Mosq ae+FoI YF Mosq albo
+	~	1/Month
+	~		|
+
+Force of infection H YellowFever=
+	FoI H ae YF+FoI H albo YF
+	~	1/Month
+	~		|
+
+H Biirths=
+	Susceptible Humans*Birth rate
+	~	People/Month
+	~		|
+
+H Chi Infections=
+	Susceptible Humans*Force of infection H CHikungunya
+	~	People/Month
+	~		|
+
+YF Reproduction Number Albo=
+	(Biting rate albo^2)*Human feeding fraction albo*Transmission prob YF H to M albo*Transmission prob YF M to H albo\
+		*(Total Adult Albo
+	/Human population 1)*EXP( -(Adult Mortality rate albo YF*EIP YF Albo))/(Adult Mortality rate albo YF\
+		*Recovery rate H YF
+	)
+	~	1/Aedes
+	~		|
+
+Transmission prob D H to M albo=
+	0.4/30
+	~	Dmnl
+	~		|
+
+Transmission prob D M to H ae=
+	0.45/30
+	~	Dmnl
+	~		|
+
+Transmission prob D M to H albo=
+	0.35/30
+	~	Dmnl
+	~		|
+
+Mortality ED Ae=
+	Exposed Dengue Ae/Adult life ae
+	~	Aedes/Month
+	~		|
+
+Transmission prob YF H to M ae=
+	0.45/30
+	~	Dmnl
+	~		|
+
+"Mortality I-C Ae"=
+	Infectious Chikungunya Ae/Adult life ae
+	~	Aedes/Month
+	~		|
+
+"Mortality I-C Albo"=
+	Infectious Chikungunya Albo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+Susceptible Ae= INTEG (
+	Adult Emergence Albo-Aedes infections Ae-Chik Infectious Ae-Natural Mortality SAae-YF M Infectious Ae\
+		,
+		100)
+	~	Aedes
+	~		|
+
+Human population 1=
+	1000
+	~	People
+	~		|
+
+Infectious Chikungunya Ae= INTEG (
+	Chikungunya become Infectious Ae-"Mortality I-C Ae",
+		0)
+	~	Aedes
+	~		|
+
+Mortality ID Albo=
+	Infectious Dengue Albo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+Natural Mortality SAae=
+	Susceptible Ae/Adult life ae
+	~	Aedes/Month
+	~		|
+
+Infectious Dengue Albo= INTEG (
+	Dengue become Infectious Albo-Mortality ID Albo,
+		0)
+	~	Aedes
+	~		|
+
+Infectious YellowFever Ae= INTEG (
+	Yellowfever become Infectious Ae-"Mortality I-YF Ae",
+		0)
+	~	Aedes
+	~		|
+
+Infectious YellowFever Albo= INTEG (
+	Yellowfever become Infectious Albo-"Mortality I-YF Albo",
+		0)
+	~	Aedes
+	~		|
+
+YellowFever Infectious Human= INTEG (
+	YF Prog to Infectious-D Recovery rate 1,
+		0)
+	~	People
+	~		|
+
+Transmission prob YF H to M albo=
+	0.3/30
+	~	Dmnl
+	~		|
+
+Transmission prob YF M to H ae=
+	0.45/30
+	~	Dmnl
+	~		|
+
+Transmission prob Chi M to H ae=
+	0.45/30
+	~	Dmnl
+	~		|
+
+Transmission prob Chi M to H albo=
+	0.35/30
+	~	Dmnl
+	~		|
+
+Transmission prob Chik H to M ae=
+	0.6/30
+	~	Dmnl
+	~		|
+
+Life expectancy=
+	70*12
+	~	Month
+	~		|
+
+Transmission prob D H to M ae=
+	0.5/30
+	~	Dmnl
+	~		|
+
+Yellowfever become Infectious Albo=
+	Exposed YellowFever Albo/EIP YF Albo
+	~	Aedes/Month
+	~		|
+
+Natural Mortality SAalbo=
+	Susceptible Albo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+YellowFever Human incubation period=
+	5/30
+	~	Month
+	~		|
+
+"Mortality I-YF Albo"=
+	Infectious YellowFever Albo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+Mortality ID Ae=
+	Infectious Dengue Ae/Adult life ae
+	~	Aedes/Month
+	~		|
+
+Yellowfever become Infectious Ae=
+	Exposed YellowFever Ae/EIP YF Ae
+	~	Aedes/Month
+	~		|
+
+Transmission prob YF M to H albo=
+	0.35/30
+	~	Dmnl
+	~		|
+
+"Mortality I-YF Ae"=
+	Infectious YellowFever Ae/Adult life ae
+	~	Aedes/Month
+	~		|
+
+YellowFever Exposed Humans= INTEG (
+	H YF Infections-YF Prog to Infectious,
+		0)
+	~	People
+	~		|
+
+YF M Infectious Ae=
+	FoI YF Mosq ae*Susceptible Ae
+	~	Aedes/Month
+	~		|
+
+YF M Infectious Albo=
+	FoI YF Mosq albo*Susceptible Albo
+	~	Aedes/Month
+	~		|
+
+YF Reproduction Number Ae=
+	(Biting rate ae^2)*Human feeding fraction ae*Transmission prob YF H to M ae*Transmission prob YF M to H ae\
+		*(Total Adult Ae
+	/Human population 1)*EXP( -(Adult Mortality rate ae YF*EIP YF Ae))/(Adult Mortality rate ae YF\
+		*Recovery rate H YF)
+	~	
+	~		|
+
+Transmission prob Chik H to M albo=
+	0.55/30
+	~	Dmnl
+	~		|
+
+Vector competence albo=
+	0.5/30
+	~	1/Month
+	~		|
+
+YF Prog to Infectious=
+	YellowFever Exposed Humans/YellowFever Human incubation period
+	~	People/Month
+	~		|
+
+Susceptible Humans= INTEG (
+	H Biirths-H Chi Infections-H D Infections-H Deaths-H YF Infections,
+		10000)
+	~	People
+	~		|
+
+Vector competence ae=
+	0.7/30
+	~	Dmnl
+	~		|
+
+Susceptible Albo= INTEG (
+	Adult Emergence Albo-Aedes infections Albo-Chik Infectious Albo-Natural Mortality SAalbo\
+		-YF M Infectious Albo,
+		100)
+	~	Aedes
+	~		|
+
+Adult Ae= INTEG (
+	Adult Emergence Ae-Adult Mortality Ae,
+		100)
+	~	Aedes
+	~		|
+
+Larva Albo= INTEG (
+	Hatching Albo-Larval mortality albo-Pupation Albo,
+		500)
+	~	Aedes
+	~		|
+
+Adult Emergence Ae=
+	Pupa Ae*Pupa duration Ae
+	~	Aedes/Month
+	~		|
+
+Adult Emergence Albo=
+	Pupa Albo*Pupa duration Albo
+	~	Aedes/Month
+	~		|
+
+Adult life ae=
+	(20*Temperature Suitability Ae)/30
+	~	Month
+	~		|
+
+Adult life albo=
+	(25*Temp Suitability Albo)/30
+	~	Month
+	~		|
+
+Adult Mortality Ae=(Adult Ae/Adult life ae)+Additional Ae mortality
+	~	Aedes/Month
+	~		|
+
+Adult Mortality ALbo=Adult Albo/Adult life albo
+	~	Aedes/Month
+	~		|
+
+Eggs per female albo=
+	9
+	~	Month
+	~		|
+
+Alpha Ae=
+	0.8/30
+	~	Dmnl
+	~	Effect of albopictus on Aegypti
+	|
+
+Alpha Albo=
+	0.4/30
+	~	
+	~	Effect of Aegypti on Albopictus. Studies suggest asymmetric competition \
+		favouring albopictus
+	|
+
+Oviposition Albo=
+	Adult Albo*Eggs per female albo*Temp Suitability Albo
+	~	Aedes/Month
+	~		|
+
+Carrying capacity Ae=
+	Container Density*Habitat Suitability Ae*Base carrying capacity
+	~	Aedes
+	~		|
+
+Carrying capacity ALbo=
+	Base carrying capacity*Container Density*Habitat Suitability Albo
+	~	Aedes
+	~		|
+
+Competition pressure ae=
+	(Larva Ae+(Alpha Ae*Larva Albo))/Carrying capacity Ae
+	~	Dmnl
+	~		|
+
+Competition pressure albo=
+	(Larva Albo+(Alpha Albo*Larva Ae))/Carrying capacity ALbo
+	~	Dmnl
+	~		|
+
+Pupa duration Albo=
+	2.5/30
+	~	1/Month
+	~		|
+
+Pupation Ae=
+	Larva Ae*Larva duration Ae
+	~	Aedes/Month
+	~		|
+
+Egg Ae= INTEG (
+	Oviposition Ae-Hatching Ae,
+		1000)
+	~	Aedes
+	~		|
+
+Rainfall:INTERPOLATE::=GET XLS DATA('Mombasa Climate2015_2065.xlsx', 'Climate_monthly_ensemble'\
+		, 'C', 'E2')
+	~	Month
+	~		|
+
+Egg duration Ae=5/30
+	~	1/Month
+	~		|
+
+Egg duration Albo=5/30
+	~	1/Month
+	~		|
+
+Eggs per female ae=
+	10
+	~	Month
+	~		|
+
+Temperature:INTERPOLATE::=GET XLS DATA('Mombasa Climate2015_2065.xlsx', 'Climate_monthly_ensemble'\
+		, 'C', 'I2')
+	~	Month
+	~		|
+
+Temperature Suitability Ae=
+	EXP(-((Temperature-30)^2)/50)
+	~	1/Month
+	~		|
+
+Hatching Ae=Egg Ae*Egg duration Ae
+	~	Aedes/Month
+	~		|
+
+Hatching Albo=Egg Albo*Egg duration Albo
+	~	Aedes/Month
+	~		|
+
+Suppression factor=
+	MIN(1, Adult Albo/(Adult Albo+Adult Ae+1))
+	~	Dmnl
+	~		|
+
+Larva Ae= INTEG (
+	Hatching Ae-Larval mortality ae-Pupation Ae,
+		500)
+	~	Aedes
+	~		|
+
+Pupa duration Ae=
+	2/30
+	~	1/Month
+	~		|
+
+Larva duration Ae=
+	8/30
+	~	1/Month
+	~		|
+
+Larva duration Albo=
+	9/30
+	~	1/Month
+	~		|
+
+Larval mortality ae=
+	(Competition pressure ae*Larva Ae*0.1)*Priority Effect Ae
+	~	Aedes/Month
+	~		|
+
+Larval mortality albo=
+	(Competition pressure albo*Larva Albo*0.08)*Priority effect albo
+	~	Aedes/Month
+	~		|
+
+Priority Index=
+	(Adult Albo-Adult Ae)/(Adult Albo+Adult Ae+1)
+	~	Dmnl
+	~		|
+
+Pupa Ae= INTEG (
+	Pupation Ae-Adult Emergence Ae,
+		200)
+	~	Aedes
+	~		|
+
+Temp Suitability Albo=
+	EXP(-((Temperature-27)^2)/60)
+	~	1/Day
+	~	Albopictus is assigned a lower optimum temperature to reflect better \
+		adaption to cooler highland conditions
+	|
+
+Priority effect albo=
+	MAX( 0 , (1+Priority Index))
+	~	Dmnl
+	~		|
+
+Oviposition Ae=
+	Adult Ae*Eggs per female ae*Temperature Suitability Ae
+	~	Aedes/Month
+	~		|
+
+Priority Effect Ae=
+	MAX( 0 , (1-Priority Index))
+	~	Dmnl
+	~		|
+
+Suppression Month value=
+	0.01
+	~	1/Month
+	~		|
+
+Pupation Albo=
+	Larva Albo*Larva duration Albo
+	~	Aedes/Month
+	~		|
+
+Urbanization index=
+	0.5
+	~	Dmnl
+	~		|
+
+Base carrying capacity=
+	10000
+	~	Aedes
+	~		|
+
+Container Density=
+	100
+	~	Dmnl
+	~		|
+
+Habitat Suitability Ae=
+	MIN(1, 0.3+(0.4*Urbanization index)+(0.3*(Rainfall/100)))
+	~	Dmnl
+	~		|
+
+Habitat Suitability Albo=
+	MIN(1, (0.4*Organic matter index)+(0.2*Urbanization index)+(0.4*(Rainfall/100)))
+	~	Dmnl
+	~		|
+
+Organic matter index=
+	0.5
+	~	Dmnl
+	~		|
+
+Adult Albo= INTEG (
+	Adult Emergence Albo-Adult Mortality ALbo,
+		100)
+	~	Aedes
+	~		|
+
+Egg Albo= INTEG (
+	Oviposition Albo-Hatching Albo,
+		1000)
+	~	Aedes
+	~		|
+
+Pupa Albo= INTEG (
+	Pupation Albo-Adult Emergence Albo,
+		200)
+	~	Aedes
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 611
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.0625
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Aedes Life Cycle
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Egg Albo,430,386,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Larva Albo,719,389,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Pupa Albo,1021,389,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,Adult Albo,1341,396,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,5,48,237,389,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,6,8,1,4,0,0,22,0,0,0,-1--1--1,,1|(357,389)|
+1,7,8,5,100,0,0,22,0,0,0,-1--1--1,,1|(279,389)|
+11,8,0,318,389,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,9,Oviposition Albo,318,408,54,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,10,12,2,4,0,0,22,0,0,0,-1--1--1,,1|(629,387)|
+1,11,12,1,100,0,0,22,0,0,0,-1--1--1,,1|(519,387)|
+11,12,0,574,387,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,13,Hatching Albo,574,406,46,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,16,3,4,0,0,22,0,0,0,-1--1--1,,1|(928,389)|
+1,15,16,2,100,0,0,22,0,0,0,-1--1--1,,1|(811,389)|
+11,16,0,870,389,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,17,Pupation Albo,870,408,46,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,18,20,4,4,0,0,22,0,0,0,-1--1--1,,1|(1244,392)|
+1,19,20,3,100,0,0,22,0,0,0,-1--1--1,,1|(1118,392)|
+11,20,0,1181,392,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,21,Adult Emergence Albo,1181,419,55,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,22,48,1554,392,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,23,25,22,4,0,0,22,0,0,0,-1--1--1,,1|(1506,392)|
+1,24,25,4,100,0,0,22,0,0,0,-1--1--1,,1|(1418,392)|
+11,25,0,1462,392,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,26,Adult Mortality ALbo,1462,419,49,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,27,Temperature,197,664,41,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,28,Rainfall,266,837,24,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,29,Container Density,156,845,56,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,30,Habitat Suitability Albo,404,780,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,31,Urbanization index,370,854,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,32,Organic matter index,469,828,48,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,33,31,30,1,0,0,0,0,128,0,-1--1--1,,1|(396,831)|
+1,34,28,30,1,0,0,0,0,128,0,-1--1--1,,1|(326,822)|
+1,35,32,30,1,0,0,0,0,128,0,-1--1--1,,1|(444,802)|
+10,36,Habitat Suitability Ae,367,950,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,37,28,36,1,0,0,0,0,128,0,-1--1--1,,1|(295,888)|
+1,38,31,36,1,0,0,0,0,128,0,-1--1--1,,1|(384,898)|
+10,39,Base carrying capacity,563,837,44,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,40,Carrying capacity ALbo,403,698,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,41,Carrying capacity Ae,390,1029,39,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,42,39,41,1,0,0,0,0,128,0,-1--1--1,,1|(503,947)|
+1,43,39,40,1,0,0,0,0,128,0,-1--1--1,,1|(525,746)|
+1,44,29,41,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,45,29,40,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,46,36,41,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,47,30,40,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,48,Temperature Suitability Ae,127,605,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,49,Temp Suitability Albo,299,602,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,50,27,48,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,51,27,49,1,0,0,0,0,128,0,-1--1--1,,1|(220,637)|
+10,52,Alpha Ae,829,238,31,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,53,Alpha Albo,885,549,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,54,Egg duration Albo,493,311,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,55,Larva duration Albo,874,318,47,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,56,Pupa duration Albo,1175,317,45,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,57,Adult life albo,434,557,44,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,58,Eggs per female albo,232,457,51,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,59,58,9,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,60,49,57,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,61,49,9,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,62,1,13,1,0,0,0,0,128,0,-1--1--1,,1|(477,345)|
+1,63,54,13,1,0,0,0,0,128,0,-1--1--1,,1|(588,350)|
+1,64,2,17,1,0,0,0,0,128,0,-1--1--1,,1|(806,338)|
+1,65,55,17,1,0,0,0,0,128,0,-1--1--1,,1|(910,370)|
+1,66,3,21,1,0,0,0,0,128,0,-1--1--1,,1|(1142,349)|
+1,67,56,21,1,0,0,0,0,128,0,-1--1--1,,1|(1235,358)|
+1,68,4,26,1,0,0,0,0,128,0,-1--1--1,,1|(1396,353)|
+10,69,Adult life albo,1446,328,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,70,69,26,1,0,0,0,0,128,0,-1--1--1,,1|(1488,366)|
+10,71,Adult Albo,302,335,45,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,72,71,9,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,73,Adult life ae,150,546,38,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,74,48,73,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,75,Competition pressure albo,903,454,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,76,2,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,77,53,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,78,Carrying capacity ALbo,1059,480,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+12,79,48,713,539,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,80,82,79,4,0,0,22,0,0,0,-1--1--1,,1|(713,503)|
+1,81,82,2,100,0,0,22,0,0,0,-1--1--1,,1|(713,436)|
+11,82,0,713,470,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,83,Larval mortality albo,771,470,50,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,84,2,82,1,0,0,0,0,128,0,-1--1--1,,1|(666,468)|
+1,85,75,83,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,86,78,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,87,Egg Ae,402,98,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,88,Larva Ae,691,101,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,89,Pupa Ae,993,101,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,90,Adult Ae,1313,108,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,91,48,209,101,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,92,94,87,4,0,0,22,0,0,0,-1--1--1,,1|(329,101)|
+1,93,94,91,100,0,0,22,0,0,0,-1--1--1,,1|(251,101)|
+11,94,0,290,101,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,95,Oviposition Ae,290,120,48,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,96,98,88,4,0,0,22,0,0,0,-1--1--1,,1|(601,99)|
+1,97,98,87,100,0,0,22,0,0,0,-1--1--1,,1|(491,99)|
+11,98,0,546,99,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,99,Hatching Ae,546,118,40,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,100,102,89,4,0,0,22,0,0,0,-1--1--1,,1|(900,101)|
+1,101,102,88,100,0,0,22,0,0,0,-1--1--1,,1|(783,101)|
+11,102,0,842,101,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,103,Pupation Ae,842,120,40,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,104,106,90,4,0,0,22,0,0,0,-1--1--1,,1|(1216,104)|
+1,105,106,89,100,0,0,22,0,0,0,-1--1--1,,1|(1090,104)|
+11,106,0,1153,104,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,107,Adult Emergence Ae,1153,131,47,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,108,48,1526,104,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,109,111,108,4,0,0,22,0,0,0,-1--1--1,,1|(1478,104)|
+1,110,111,90,100,0,0,22,0,0,0,-1--1--1,,1|(1390,104)|
+11,111,0,1434,104,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,112,Adult Mortality Ae,1434,131,59,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,113,Egg duration Ae,465,23,51,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,114,Larva duration Ae,846,30,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,115,Pupa duration Ae,1147,29,55,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,116,Eggs per female ae,204,169,59,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,117,116,95,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,118,87,99,1,0,0,0,0,128,0,-1--1--1,,1|(449,57)|
+1,119,113,99,1,0,0,0,0,128,0,-1--1--1,,1|(560,62)|
+1,120,88,103,1,0,0,0,0,128,0,-1--1--1,,1|(778,50)|
+1,121,114,103,1,0,0,0,0,128,0,-1--1--1,,1|(882,82)|
+1,122,89,107,1,0,0,0,0,128,0,-1--1--1,,1|(1114,61)|
+1,123,115,107,1,0,0,0,0,128,0,-1--1--1,,1|(1207,70)|
+1,124,90,112,1,0,0,0,0,128,0,-1--1--1,,1|(1368,65)|
+10,125,Adult Ae,274,47,39,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,126,125,95,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,127,Competition pressure ae,875,166,40,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,128,88,127,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+12,129,48,685,251,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,130,132,129,4,0,0,22,0,0,0,-1--1--1,,1|(685,215)|
+1,131,132,88,100,0,0,22,0,0,0,-1--1--1,,1|(685,148)|
+11,132,0,685,182,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,133,Larval mortality ae,743,182,58,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,134,88,132,1,0,0,0,0,128,0,-1--1--1,,1|(638,180)|
+1,135,127,133,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,136,Carrying capacity Ae,951,229,43,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,137,Adult life ae,1483,55,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,138,136,127,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,139,137,112,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,140,Temperature Suitability Ae,343,177,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,141,140,95,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,142,52,127,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,143,Larva Ae,975,514,40,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,144,Larva Albo,1015,170,46,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,145,144,127,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,146,143,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,147,Suppression factor,1370,272,59,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,148,4,147,1,0,0,0,0,128,0,-1--1--1,,1|(1331,332)|
+1,149,90,147,1,0,0,0,0,128,0,-1--1--1,,1|(1282,217)|
+10,150,Additional Ae mortality,1456,205,45,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,151,90,150,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,152,147,150,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,153,150,112,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,154,Priority Index,1364,465,43,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,155,Priority Effect Ae,1261,516,55,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,156,Priority effect albo,1494,532,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,157,Adult Ae,1474,462,39,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,158,4,154,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,159,157,154,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,160,154,155,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,161,154,156,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,162,Priority Effect Ae,567,191,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,163,Priority effect albo,609,508,48,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,164,162,133,1,0,0,0,0,128,0,-1--1--1,,1|(644,199)|
+1,165,163,83,1,0,0,0,0,128,0,-1--1--1,,1|(672,503)|
+10,166,Suppression Month value,1531,246,40,19,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,167,166,150,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Aedes Vectors SEI
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Susceptible Albo,96,194,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Exposed Dengue ALbo,347,188,40,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Infectious Dengue Albo,601,189,46,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,Adult Emergence Albo,-41,218,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,5,7,2,4,0,0,22,0,0,0,-1--1--1,,1|(267,189)|
+1,6,7,1,100,0,0,22,0,0,0,-1--1--1,,1|(175,189)|
+11,7,0,221,189,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,8,Aedes infections Albo,221,216,53,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,9,11,3,4,0,0,22,0,0,0,-1--1--1,,1|(516,184)|
+1,10,11,2,100,0,0,22,0,0,0,-1--1--1,,1|(426,184)|
+11,11,0,471,184,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,12,Dengue become Infectious Albo,471,211,52,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,13,48,106,59,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,16,13,4,0,0,22,0,0,0,-1--1--1,,1|(106,90)|
+1,15,16,1,100,0,0,22,0,0,0,-1--1--1,,1|(106,150)|
+11,16,0,106,120,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,17,Natural Mortality SAalbo,169,120,55,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,18,48,348,57,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,21,18,4,0,0,22,0,0,0,-1--1--1,,1|(348,86)|
+1,20,21,2,100,0,0,22,0,0,0,-1--1--1,,1|(348,142)|
+11,21,0,348,114,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,22,Mortality ED Albo,411,114,59,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,23,48,594,76,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,24,26,23,4,0,0,22,0,0,0,-1--1--1,,1|(594,101)|
+1,25,26,3,100,0,0,22,0,0,0,-1--1--1,,1|(594,147)|
+11,26,0,594,124,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,27,Mortality ID Albo,657,124,57,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,28,4,1,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,29,D Force of infection Mosquito,364,865,64,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,30,FoI D Mosq ae,242,910,50,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,31,FoI D Mosq albo,448,930,56,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,32,30,29,1,0,0,0,0,128,0,-1--1--1,,1|(293,920)|
+1,33,31,29,1,0,0,0,0,128,0,-1--1--1,,1|(418,894)|
+10,34,Transmission prob D H to M albo,501,1005,67,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,35,Transmission prob D H to M ae,154,972,67,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,36,34,31,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,37,35,30,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,38,Dengue Infectious Human,337,968,62,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,39,38,30,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,40,38,31,1,0,0,0,0,128,0,-1--1--1,,1|(365,932)|
+10,41,Human population 1,328,1027,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,42,41,30,1,0,0,0,0,128,0,-1--1--1,,1|(265,986)|
+1,43,41,31,1,0,0,0,0,128,0,-1--1--1,,1|(402,999)|
+10,44,Human feeding fraction ae,98,908,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,45,Human feeding fraction albo,487,866,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,46,Biting rate ae,229,836,51,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,47,Biting rate albo,614,916,57,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,48,44,30,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,49,46,30,1,0,0,0,0,128,0,-1--1--1,,1|(224,868)|
+1,50,45,31,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,51,47,31,1,0,0,0,0,128,0,-1--1--1,,1|(544,950)|
+10,52,EIP D Ae,164,1084,32,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,53,EIP D Albo,330,1091,38,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,54,Temp Suitability Albo,366,1157,56,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,55,Temperature Suitability Ae,127,1145,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,56,55,52,1,0,0,0,0,128,0,-1--1--1,,1|(115,1112)|
+1,57,54,53,1,0,0,0,0,128,0,-1--1--1,,1|(300,1134)|
+10,58,FoI D Mosq albo,274,282,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,59,Adult life albo,267,106,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,60,Adult life albo,512,98,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,61,EIP D Albo,458,271,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,62,1,17,1,0,0,0,0,128,0,-1--1--1,,1|(68,137)|
+1,63,1,8,1,0,0,0,0,128,0,-1--1--1,,1|(161,168)|
+1,64,59,17,1,0,0,0,0,128,0,-1--1--1,,1|(220,81)|
+1,65,58,8,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,66,2,21,1,0,0,0,0,128,0,-1--1--1,,1|(319,153)|
+1,67,59,21,1,0,0,0,0,128,0,-1--1--1,,1|(311,73)|
+1,68,60,26,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,69,2,12,1,0,0,0,0,128,0,-1--1--1,,1|(426,163)|
+1,70,61,12,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,71,3,27,1,0,0,0,0,128,0,-1--1--1,,1|(664,153)|
+10,72,Total Adult Albo,849,188,53,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,73,Susceptible Albo,779,237,42,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,74,Exposed Dengue ALbo,866,272,59,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,75,Infectious Dengue Albo,986,184,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,76,73,72,1,0,0,0,0,128,0,-1--1--1,,1|(812,174)|
+1,77,74,72,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,78,75,72,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,79,Exposed Chikungunya Albo,301,470,40,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,80,Infectious Chikungunya Albo,555,471,46,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,81,83,80,4,0,0,22,0,0,0,-1--1--1,,1|(470,466)|
+1,82,83,79,100,0,0,22,0,0,0,-1--1--1,,1|(380,466)|
+11,83,0,425,466,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,84,Chikungunya become Infectious Albo,425,493,69,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,85,48,302,339,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,86,88,85,4,0,0,22,0,0,0,-1--1--1,,1|(302,368)|
+1,87,88,79,100,0,0,22,0,0,0,-1--1--1,,1|(302,424)|
+11,88,0,302,396,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,89,"Mortality E-C Albo 0",365,396,45,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,90,48,548,358,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,91,93,90,4,0,0,22,0,0,0,-1--1--1,,1|(548,383)|
+1,92,93,80,100,0,0,22,0,0,0,-1--1--1,,1|(548,429)|
+11,93,0,548,406,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,94,"Mortality I-C Albo",611,406,60,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,95,Adult life albo,221,388,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,96,Adult life albo,466,380,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,97,79,88,1,0,0,0,0,128,0,-1--1--1,,1|(273,435)|
+1,98,95,88,1,0,0,0,0,128,0,-1--1--1,,1|(265,355)|
+1,99,96,93,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,100,79,84,1,0,0,0,0,128,0,-1--1--1,,1|(380,445)|
+1,101,80,94,1,0,0,0,0,128,0,-1--1--1,,1|(618,435)|
+10,102,Exposed YellowFever Albo,328,708,40,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,103,Infectious YellowFever Albo,582,709,46,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,104,106,103,4,0,0,22,0,0,0,-1--1--1,,1|(497,704)|
+1,105,106,102,100,0,0,22,0,0,0,-1--1--1,,1|(407,704)|
+11,106,0,452,704,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,107,Yellowfever become Infectious Albo,452,731,66,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,108,48,329,577,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,109,111,108,4,0,0,22,0,0,0,-1--1--1,,1|(329,606)|
+1,110,111,102,100,0,0,22,0,0,0,-1--1--1,,1|(329,662)|
+11,111,0,329,634,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,112,"Mortality E-YF Albo",392,634,50,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,113,48,575,596,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,114,116,113,4,0,0,22,0,0,0,-1--1--1,,1|(575,621)|
+1,115,116,103,100,0,0,22,0,0,0,-1--1--1,,1|(575,667)|
+11,116,0,575,644,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,117,"Mortality I-YF Albo",638,644,48,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,118,Adult life albo,248,626,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,119,Adult life albo,493,618,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,120,102,111,1,0,0,0,0,128,0,-1--1--1,,1|(300,673)|
+1,121,118,111,1,0,0,0,0,128,0,-1--1--1,,1|(292,593)|
+1,122,119,116,1,0,0,0,0,128,0,-1--1--1,,1|(530,652)|
+1,123,102,107,1,0,0,0,0,128,0,-1--1--1,,1|(407,683)|
+1,124,103,117,1,0,0,0,0,128,0,-1--1--1,,1|(645,673)|
+1,125,127,79,4,0,0,22,0,0,0,-1--1--1,,1|(219,474)|
+1,126,127,1,100,0,0,22,0,0,0,-1--1--1,,1|(96,474)|
+11,127,0,172,474,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,128,Chik Infectious Albo,172,501,64,19,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,129,131,102,4,0,0,22,0,0,0,-1--1--1,,1|(189,694)|
+1,130,131,1,100,0,0,22,0,0,0,-1--1--1,,1|(85,450)|
+11,131,0,85,694,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,132,YF M Infectious Albo,85,721,53,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,133,EIP Chi Ae,240,1167,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,134,EIP Chi Albo,458,1107,43,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,135,EIP YF Ae,150,1205,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,136,EIP YF Albo,460,1197,43,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,137,55,133,1,0,0,0,0,128,0,-1--1--1,,1|(200,1137)|
+1,138,55,135,1,0,0,0,0,128,0,-1--1--1,,1|(99,1174)|
+1,139,54,134,1,0,0,0,0,128,0,-1--1--1,,1|(392,1118)|
+1,140,54,136,1,0,0,0,0,128,0,-1--1--1,,1|(454,1158)|
+10,141,EIP Chi Albo,542,546,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,142,EIP YF Albo,317,771,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,143,142,107,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,144,141,84,1,0,0,0,0,128,0,-1--1--1,,1|(457,550)|
+10,145,Chik Force of infection Mosquito,899,877,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,146,FoI Chik Mosq ae,780,884,59,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,147,FoI Chik Mosq albo,1006,951,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,148,146,145,1,0,0,0,0,128,0,-1--1--1,,1|(822,904)|
+1,149,147,145,1,0,0,0,0,128,0,-1--1--1,,1|(969,906)|
+10,150,Transmission prob Chik H to M albo,1109,990,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,151,Transmission prob Chik H to M ae,703,972,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,152,150,147,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,153,151,146,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,154,Human population 1,877,1027,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,155,154,146,1,0,0,0,0,128,0,-1--1--1,,1|(818,972)|
+1,156,154,147,1,0,0,0,0,128,0,-1--1--1,,1|(952,1010)|
+10,157,Human feeding fraction ae,633,861,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,158,Human feeding fraction albo,1008,815,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,159,Biting rate ae,779,821,51,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,160,Biting rate albo,1119,916,57,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,161,157,146,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,162,159,146,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,163,158,147,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,164,160,147,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,165,YF Force of infection Mosquito,868,1124,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,166,FoI YF Mosq ae,757,1149,54,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,167,FoI YF Mosq albo,966,1177,46,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,168,166,165,1,0,0,0,0,128,0,-1--1--1,,1|(799,1160)|
+1,169,167,165,1,0,0,0,0,128,0,-1--1--1,,1|(945,1138)|
+10,170,Transmission prob YF H to M albo,1035,1263,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,171,Transmission prob YF H to M ae,672,1219,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,172,170,167,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,173,171,166,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,174,Human population 1,830,1269,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,175,174,166,1,0,0,0,0,128,0,-1--1--1,,1|(771,1221)|
+1,176,174,167,1,0,0,0,0,128,0,-1--1--1,,1|(922,1262)|
+10,177,Human feeding fraction ae,618,1133,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,178,Human feeding fraction albo,977,1065,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,179,Biting rate ae,749,1084,51,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,180,Biting rate albo,1088,1163,57,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,181,177,166,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,182,179,166,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,183,178,167,1,0,0,0,0,128,0,-1--1--1,,1|(988,1124)|
+1,184,180,167,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,185,YellowFever Infectious Human,862,1208,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,186,Chikungunya Infectious Human,891,964,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,187,185,166,1,0,0,0,0,128,0,-1--1--1,,1|(781,1190)|
+1,188,185,167,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,189,186,146,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,190,186,147,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,191,1,128,1,0,0,0,0,128,0,-1--1--1,,1|(131,341)|
+1,192,1,132,1,0,0,0,0,128,0,-1--1--1,,1|(36,472)|
+10,193,Exposed Chikungunya Albo,830,87,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,194,Exposed YellowFever Albo,976,124,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,195,Infectious Chikungunya Albo,986,248,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,196,Infectious YellowFever Albo,776,143,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,197,196,72,1,0,0,0,0,128,0,-1--1--1,,1|(844,157)|
+1,198,193,72,1,0,0,0,0,128,0,-1--1--1,,1|(871,137)|
+1,199,194,72,1,0,0,0,0,128,0,-1--1--1,,1|(902,168)|
+1,200,195,72,1,0,0,0,0,128,0,-1--1--1,,1|(883,213)|
+10,201,Susceptible Ae,1255,192,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,202,Exposed Dengue Ae,1506,186,40,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,203,Infectious Dengue Ae,1760,187,46,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,204,Adult Emergence Albo,1118,195,60,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,205,207,202,4,0,0,22,0,0,0,-1--1--1,,1|(1426,187)|
+1,206,207,201,100,0,0,22,0,0,0,-1--1--1,,1|(1334,187)|
+11,207,0,1380,187,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,208,Aedes infections Ae,1380,214,53,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,209,211,203,4,0,0,22,0,0,0,-1--1--1,,1|(1675,182)|
+1,210,211,202,100,0,0,22,0,0,0,-1--1--1,,1|(1585,182)|
+11,211,0,1630,182,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,212,Dengue become Infectious Ae,1630,209,52,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,213,48,1265,57,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,214,216,213,4,0,0,22,0,0,0,-1--1--1,,1|(1265,88)|
+1,215,216,201,100,0,0,22,0,0,0,-1--1--1,,1|(1265,148)|
+11,216,0,1265,118,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,217,Natural Mortality SAae,1328,118,55,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,218,48,1507,55,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,219,221,218,4,0,0,22,0,0,0,-1--1--1,,1|(1507,84)|
+1,220,221,202,100,0,0,22,0,0,0,-1--1--1,,1|(1507,140)|
+11,221,0,1507,112,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,222,Mortality ED Ae,1570,112,53,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,223,48,1753,74,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,224,226,223,4,0,0,22,0,0,0,-1--1--1,,1|(1753,99)|
+1,225,226,203,100,0,0,22,0,0,0,-1--1--1,,1|(1753,145)|
+11,226,0,1753,122,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,227,Mortality ID Ae,1816,122,51,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,228,204,201,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,229,201,217,1,0,0,0,0,128,0,-1--1--1,,1|(1227,135)|
+1,230,201,208,1,0,0,0,0,128,0,-1--1--1,,1|(1320,166)|
+1,231,202,221,1,0,0,0,0,128,0,-1--1--1,,1|(1478,151)|
+1,232,202,212,1,0,0,0,0,128,0,-1--1--1,,1|(1585,161)|
+1,233,203,227,1,0,0,0,0,128,0,-1--1--1,,1|(1823,151)|
+10,234,Total Adult Ae,2008,186,53,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,235,Susceptible Ae,1938,235,57,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,236,Exposed Dengue Ae,2025,270,41,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,237,Infectious Dengue Ae,2145,182,41,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,238,235,234,1,0,0,0,0,128,0,-1--1--1,,1|(1971,172)|
+1,239,236,234,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,240,237,234,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,241,Exposed Chikungunya Ae,1460,468,40,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,242,Infectious Chikungunya Ae,1714,469,46,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,243,245,242,4,0,0,22,0,0,0,-1--1--1,,1|(1629,464)|
+1,244,245,241,100,0,0,22,0,0,0,-1--1--1,,1|(1539,464)|
+11,245,0,1584,464,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,246,Chikungunya become Infectious Ae,1584,491,69,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,247,48,1461,337,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,248,250,247,4,0,0,22,0,0,0,-1--1--1,,1|(1461,366)|
+1,249,250,241,100,0,0,22,0,0,0,-1--1--1,,1|(1461,422)|
+11,250,0,1461,394,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,251,"Mortality E-C Ae",1524,394,56,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,252,48,1707,356,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,253,255,252,4,0,0,22,0,0,0,-1--1--1,,1|(1707,381)|
+1,254,255,242,100,0,0,22,0,0,0,-1--1--1,,1|(1707,427)|
+11,255,0,1707,404,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,256,"Mortality I-C Ae",1770,404,54,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,257,241,250,1,0,0,0,0,128,0,-1--1--1,,1|(1432,433)|
+1,258,241,246,1,0,0,0,0,128,0,-1--1--1,,1|(1539,443)|
+1,259,242,256,1,0,0,0,0,128,0,-1--1--1,,1|(1777,433)|
+10,260,Exposed YellowFever Ae,1487,706,40,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,261,Infectious YellowFever Ae,1741,707,46,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,262,264,261,4,0,0,22,0,0,0,-1--1--1,,1|(1656,702)|
+1,263,264,260,100,0,0,22,0,0,0,-1--1--1,,1|(1566,702)|
+11,264,0,1611,702,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,265,Yellowfever become Infectious Ae,1611,729,66,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,266,48,1488,575,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,267,269,266,4,0,0,22,0,0,0,-1--1--1,,1|(1488,604)|
+1,268,269,260,100,0,0,22,0,0,0,-1--1--1,,1|(1488,660)|
+11,269,0,1488,632,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,270,"Mortality E-YF Ae",1551,632,50,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,271,48,1734,594,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,272,274,271,4,0,0,22,0,0,0,-1--1--1,,1|(1734,619)|
+1,273,274,261,100,0,0,22,0,0,0,-1--1--1,,1|(1734,665)|
+11,274,0,1734,642,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,275,"Mortality I-YF Ae",1797,642,58,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,276,260,269,1,0,0,0,0,128,0,-1--1--1,,1|(1459,671)|
+1,277,260,265,1,0,0,0,0,128,0,-1--1--1,,1|(1566,681)|
+1,278,261,275,1,0,0,0,0,128,0,-1--1--1,,1|(1804,671)|
+1,279,281,241,4,0,0,22,0,0,0,-1--1--1,,1|(1368,469)|
+1,280,281,201,100,0,0,22,0,0,0,-1--1--1,,1|(1310,192)|
+11,281,0,1310,469,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,282,Chik Infectious Ae,1310,488,59,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,283,285,260,4,0,0,22,0,0,0,-1--1--1,,1|(1348,692)|
+1,284,285,201,100,0,0,22,0,0,0,-1--1--1,,1|(1244,448)|
+11,285,0,1244,692,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,286,YF M Infectious Ae,1244,719,53,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,287,FoI Chik Mosq ae,1324,570,55,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,288,FoI YF Mosq ae,1332,773,50,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,289,201,282,1,0,0,0,0,128,0,-1--1--1,,1|(1260,348)|
+1,290,201,286,1,0,0,0,0,128,0,-1--1--1,,1|(1178,478)|
+1,291,288,286,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,292,287,282,1,0,0,0,0,128,0,-1--1--1,,1|(1353,521)|
+10,293,Exposed Chikungunya Ae,1989,85,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,294,Exposed YellowFever Ae,2135,122,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,295,Infectious Chikungunya Ae,2145,246,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,296,Infectious YellowFever Ae,1935,141,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,297,296,234,1,0,0,0,0,128,0,-1--1--1,,1|(2003,155)|
+1,298,293,234,1,0,0,0,0,128,0,-1--1--1,,1|(2030,135)|
+1,299,294,234,1,0,0,0,0,128,0,-1--1--1,,1|(2061,166)|
+1,300,295,234,1,0,0,0,0,128,0,-1--1--1,,1|(2042,211)|
+10,301,FoI Chik Mosq albo,187,604,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,302,FoI YF Mosq albo,218,731,50,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,303,FoI D Mosq ae,1349,299,59,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,304,303,208,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,305,301,128,1,0,0,0,0,128,0,-1--1--1,,1|(145,562)|
+1,306,302,132,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,307,Adult life ae,1685,126,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,308,Adult life ae,1620,326,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,309,Adult life ae,1651,581,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,310,307,227,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,311,308,255,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,312,309,275,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,313,309,270,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,314,308,251,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,315,307,222,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,316,Adult life ae,1346,54,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,317,316,217,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,318,EIP Chi Ae,1526,537,46,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,319,EIP D Ae,1518,267,41,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,320,EIP YF Ae,1628,784,46,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,321,320,265,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,322,318,246,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,323,319,212,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Human SEIR
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Susceptible Humans,213,176,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Dengue Exposed Humans,457,179,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Dengue Infectious Human,737,178,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,Dengue Recovered Humans,991,181,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,5,48,3,187,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,6,8,1,4,0,0,22,0,0,0,-1--1--1,,1|(136,187)|
+1,7,8,5,100,0,0,22,0,0,0,-1--1--1,,1|(50,187)|
+11,8,0,93,187,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,9,H Biirths,93,206,29,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,10,12,2,4,0,0,22,0,0,0,-1--1--1,,1|(379,177)|
+1,11,12,1,100,0,0,22,0,0,0,-1--1--1,,1|(291,177)|
+11,12,0,335,177,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,13,H D Infections,335,196,46,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,14,48,212,47,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,15,17,14,4,0,0,22,0,0,0,-1--1--1,,1|(212,77)|
+1,16,17,1,100,0,0,22,0,0,0,-1--1--1,,1|(212,134)|
+11,17,0,212,105,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,18,H Deaths,251,105,31,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,21,3,4,0,0,22,0,0,0,-1--1--1,,1|(650,178)|
+1,20,21,2,100,0,0,22,0,0,0,-1--1--1,,1|(544,178)|
+11,21,0,597,178,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,22,D Prog to Infectious,597,205,32,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,23,25,4,4,0,0,22,0,0,0,-1--1--1,,1|(915,176)|
+1,24,25,3,100,0,0,22,0,0,0,-1--1--1,,1|(822,176)|
+11,25,0,873,176,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,26,D Recovery rate,873,195,52,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,27,1,13,1,0,0,0,0,128,0,-1--1--1,,1|(276,137)|
+1,28,1,9,1,0,0,0,0,128,0,-1--1--1,,1|(171,235)|
+1,29,1,18,1,0,0,0,0,128,0,-1--1--1,,1|(182,121)|
+10,30,Dengue Human incubation period,595,296,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,31,30,22,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,32,2,22,1,0,0,0,0,128,0,-1--1--1,,1|(513,134)|
+10,33,D Infectious period,887,257,39,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,34,33,26,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,35,3,26,1,0,0,0,0,128,0,-1--1--1,,1|(804,143)|
+10,36,Human population 1,1432,600,45,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,37,Human feeding fraction ae,1258,432,53,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,38,Biting rate ae,1357,453,51,11,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,39,Vector competence ae,1415,302,48,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,40,Transmission potential ae,1390,389,42,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,41,Total transmission potential,1489,265,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,42,Biting rate albo,1647,470,57,11,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,43,Vector competence albo,1720,398,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,44,Transmission potential albo,1593,365,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,45,Adult Ae,1302,346,39,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,46,Adult Albo,1680,313,45,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,47,40,41,1,0,0,0,0,128,0,-1--1--1,,1|(1461,379)|
+1,48,44,41,1,0,0,0,0,128,0,-1--1--1,,1|(1532,344)|
+1,49,38,40,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,50,45,40,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,51,39,40,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,52,43,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,53,46,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,54,42,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,55,Human feeding fraction albo,1533,456,53,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,56,37,40,1,0,0,0,0,128,0,-1--1--1,,1|(1314,402)|
+1,57,55,44,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,58,Force of infection H Dengue,1427,508,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,59,FoI H ae,1300,515,30,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,60,FoI H albo,1515,551,36,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,61,59,58,1,0,0,0,0,128,0,-1--1--1,,1|(1345,538)|
+1,62,60,58,1,0,0,0,0,128,0,-1--1--1,,1|(1480,525)|
+1,63,37,59,1,0,0,0,0,128,0,-1--1--1,,1|(1265,473)|
+1,64,38,59,1,0,0,0,0,128,0,-1--1--1,,1|(1338,483)|
+1,65,55,60,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,66,42,60,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,67,Transmission prob D M to H albo,1627,611,67,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,68,Transmission prob D M to H ae,1249,583,67,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,69,Infectious Dengue Albo,1528,657,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,70,67,60,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,71,36,60,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,72,36,59,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,73,68,59,1,0,0,0,0,128,0,-1--1--1,,1|(1264,541)|
+1,74,69,60,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,75,D Reproduction Number Ae,1452,952,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,76,D Reproduction Number Albo,1484,721,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,77,Total Adult Albo,1598,712,41,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,78,Biting rate albo,1627,747,57,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,79,Human feeding fraction albo,1405,797,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,80,Transmission prob D H to M albo,1323,720,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,81,Transmission prob D M to H albo,1327,666,71,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,82,EIP D Albo,1570,789,42,20,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,83,D Infectious period,1625,845,44,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,84,Recovery rate H,1488,836,52,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,85,Adult Mortality rate albo,1289,791,49,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,86,Adult life albo,1255,852,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,87,86,85,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,88,83,84,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,89,81,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,90,77,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,91,78,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,92,79,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,93,80,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,94,85,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,95,84,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,96,82,76,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,97,36,76,1,0,0,0,0,128,0,-1--1--1,,1|(1511,659)|
+10,98,Transmission prob D H to M ae,1320,901,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,99,Transmission prob D M to H ae,1472,893,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,100,Biting rate ae,1596,935,51,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,101,Human population 1,1574,1011,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,102,Human feeding fraction ae,1485,1059,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,103,Recovery rate H,1333,968,50,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,104,Adult Mortality rate ae,1278,1019,49,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,105,EIP D Ae,1366,1034,35,21,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,106,105,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,107,104,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,108,103,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,109,98,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,110,99,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,111,100,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,112,101,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,113,102,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,114,Force of infection H Dengue,336,285,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,115,114,13,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,116,Chikungunya Exposed Humans,441,377,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,117,Chikungunya Infectious Human,721,376,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,118,Chikungunya Recovered Humans,975,379,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,119,121,117,4,0,0,22,0,0,0,-1--1--1,,1|(634,376)|
+1,120,121,116,100,0,0,22,0,0,0,-1--1--1,,1|(528,376)|
+11,121,0,581,376,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,122,Chik Prog to Infectious,581,403,42,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,123,125,118,4,0,0,22,0,0,0,-1--1--1,,1|(899,374)|
+1,124,125,117,100,0,0,22,0,0,0,-1--1--1,,1|(806,374)|
+11,125,0,857,374,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,126,Chi Recovery rate,857,393,57,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,127,Chiku Human incubation period,579,494,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,128,127,122,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,129,116,122,1,0,0,0,0,128,0,-1--1--1,,1|(497,332)|
+10,130,Chi Infectious period,871,455,44,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,131,130,126,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,132,117,126,1,0,0,0,0,128,0,-1--1--1,,1|(788,341)|
+10,133,YellowFever Exposed Humans,185,573,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,134,YellowFever Infectious Human,465,572,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,135,YellowFever Recovered Humans,719,575,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,136,138,134,4,0,0,22,0,0,0,-1--1--1,,1|(378,572)|
+1,137,138,133,100,0,0,22,0,0,0,-1--1--1,,1|(272,572)|
+11,138,0,325,572,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,139,YF Prog to Infectious,325,599,37,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,140,142,135,4,0,0,22,0,0,0,-1--1--1,,1|(643,570)|
+1,141,142,134,100,0,0,22,0,0,0,-1--1--1,,1|(550,570)|
+11,142,0,601,570,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,143,D Recovery rate 1,601,589,58,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,144,YellowFever Human incubation period,323,690,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,145,144,139,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,146,133,139,1,0,0,0,0,128,0,-1--1--1,,1|(241,528)|
+10,147,YellowFever Infectious period,615,651,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,148,147,143,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,149,134,143,1,0,0,0,0,128,0,-1--1--1,,1|(532,537)|
+1,150,152,116,4,0,0,22,0,0,0,-1--1--1,,1|(271,377)|
+1,151,152,1,100,0,0,22,0,0,0,-1--1--1,,1|(213,348)|
+11,152,0,271,348,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,153,H Chi Infections,271,367,51,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,154,156,133,4,0,0,22,0,0,0,-1--1--1,,1|(192,499)|
+1,155,156,1,100,0,0,22,0,0,0,-1--1--1,,1|(192,314)|
+11,156,0,192,438,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,157,H YF Infections,251,438,51,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,158,"Dengue Reproduction Number(R0)",1443,1102,70,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,159,D Reproduction Number Ae,1607,1106,56,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,160,D Reproduction Number Albo,1260,1112,56,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,161,160,158,1,0,0,0,0,128,0,-1--1--1,,1|(1350,1119)|
+1,162,159,158,1,0,0,0,0,128,0,-1--1--1,,1|(1530,1115)|
+10,163,Human population 1,266,916,45,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,164,Human feeding fraction ae,92,748,53,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,165,Biting rate ae,191,769,51,11,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,166,Biting rate albo,481,786,57,11,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,167,Human feeding fraction albo,367,772,53,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,168,Force of infection H CHikungunya,261,824,64,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,169,FoI H ae D,134,831,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,170,FoI H albo D,349,867,43,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,171,169,168,1,0,0,0,0,128,0,-1--1--1,,1|(179,854)|
+1,172,170,168,1,0,0,0,0,128,0,-1--1--1,,1|(314,841)|
+1,173,164,169,1,0,0,0,0,128,0,-1--1--1,,1|(99,789)|
+1,174,165,169,1,0,0,0,0,128,0,-1--1--1,,1|(172,799)|
+1,175,167,170,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,176,166,170,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,177,Transmission prob Chi M to H albo,461,927,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,178,Transmission prob Chi M to H ae,83,899,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,179,Infectious Dengue Albo,398,984,47,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,180,177,170,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,181,163,170,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,182,163,169,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,183,178,169,1,0,0,0,0,128,0,-1--1--1,,1|(98,857)|
+10,184,Chi Reproduction Number Ae,286,1268,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,185,Chi Reproduction Number Albo,318,1037,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,186,Total Adult Albo,432,1028,41,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,187,Biting rate albo,461,1063,57,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,188,Human feeding fraction albo,239,1113,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,189,Transmission prob Chi M to H albo,161,982,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,190,Chi Recovery rate H,322,1152,44,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,191,Adult Mortality rate albo Chi,123,1107,63,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,192,Adult life albo,89,1168,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,193,192,191,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,194,189,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,195,186,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,196,187,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,197,188,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,198,191,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,199,190,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,200,163,185,1,0,0,0,0,128,0,-1--1--1,,1|(345,975)|
+10,201,Transmission prob Chi M to H ae,306,1209,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,202,Biting rate ae,430,1251,51,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,203,Human population 1,405,1328,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,204,Human feeding fraction ae,319,1375,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,205,Chi Recovery rate H,167,1284,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,206,Adult Mortality rate ae Chi,97,1329,49,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,207,206,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,208,205,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,209,201,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,210,202,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,211,203,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,212,204,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,213,"Chikungunya Reproduction Number(R0)",277,1418,44,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,214,Chi Reproduction Number Ae,441,1422,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,215,Chi Reproduction Number Albo,94,1428,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,216,215,213,1,0,0,0,0,128,0,-1--1--1,,1|(184,1435)|
+1,217,214,213,1,0,0,0,0,128,0,-1--1--1,,1|(364,1431)|
+10,218,Human population 1,867,910,45,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,219,Human feeding fraction ae,693,742,53,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,220,Biting rate ae,792,763,51,11,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,221,Biting rate albo,1082,780,57,11,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,222,Human feeding fraction albo,968,766,53,19,8,2,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,223,Force of infection H YellowFever,862,818,64,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,224,FoI H ae YF,735,825,42,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,225,FoI H albo YF,950,861,48,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,226,224,223,1,0,0,0,0,128,0,-1--1--1,,1|(780,848)|
+1,227,225,223,1,0,0,0,0,128,0,-1--1--1,,1|(915,835)|
+1,228,219,224,1,0,0,0,0,128,0,-1--1--1,,1|(700,783)|
+1,229,220,224,1,0,0,0,0,128,0,-1--1--1,,1|(773,793)|
+1,230,222,225,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,231,221,225,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,232,Transmission prob YF M to H albo,1062,921,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,233,Transmission prob YF M to H ae,684,893,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,234,232,225,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,235,218,225,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,236,218,224,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,237,233,224,1,0,0,0,0,128,0,-1--1--1,,1|(699,851)|
+10,238,YF Reproduction Number Ae,887,1262,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,239,YF Reproduction Number Albo,919,1031,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,240,Total Adult Albo,1033,1022,41,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,241,Biting rate albo,1062,1057,57,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,242,Human feeding fraction albo,840,1107,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,243,Transmission prob YF M to H albo,762,976,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,244,Recovery rate H YF,923,1146,53,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,245,Adult Mortality rate albo YF,724,1101,63,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,246,Adult life albo,690,1162,53,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,247,246,245,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,248,243,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,249,240,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,250,241,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,251,242,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,252,245,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,253,244,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,254,218,239,1,0,0,0,0,128,0,-1--1--1,,1|(882,983)|
+10,255,Transmission prob YF M to H ae,907,1203,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,256,Biting rate ae,1031,1245,51,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,257,Human population 1,998,1305,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,258,Human feeding fraction ae,920,1369,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,259,Recovery rate H YF,768,1278,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,260,Adult Mortality rate ae YF,713,1329,49,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,261,260,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,262,259,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,263,255,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,264,256,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,265,257,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,266,258,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,267,"YellowFever Reproduction Number(R0)",878,1412,44,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,268,YF Reproduction Number Ae,1042,1416,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,269,YF Reproduction Number Albo,695,1422,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,270,269,267,1,0,0,0,0,128,0,-1--1--1,,1|(785,1429)|
+1,271,268,267,1,0,0,0,0,128,0,-1--1--1,,1|(965,1425)|
+10,272,EIP Chi Ae,187,1356,46,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,273,EIP Chi Albo,497,1105,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,274,273,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,275,272,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,276,Infectious Chikungunya Albo,347,937,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,277,276,170,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,278,Chi Infectious period,432,1203,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,279,278,190,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,280,Infectious YellowFever Albo,988,962,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,281,280,225,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,282,EIP YF Albo,1008,1110,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,283,EIP YF Ae,699,1370,46,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,284,283,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,285,282,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,286,YellowFever Infectious period,1073,1205,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,287,286,244,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,288,Transmission prob Chik H to M albo,38,1054,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,289,Transmission prob Chik H to M ae,63,1257,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,290,Transmission prob YF H to M ae,727,1219,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,291,Transmission prob YF H to M albo,700,1055,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,292,289,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,293,291,239,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,294,290,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,295,288,185,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,296,Force of infection H CHikungunya,376,425,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,297,Force of infection H YellowFever,275,483,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,298,297,157,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,299,296,153,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,300,1,153,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,301,1,157,1,0,0,0,0,128,0,-1--1--1,,1|(139,412)|
+10,302,Total Adult Ae,803,1376,56,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,303,Total Adult Ae,180,1390,56,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,304,Total Adult Ae,1259,1068,56,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,305,303,184,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,306,302,238,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,307,304,75,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,308,Birth rate,52,148,30,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,309,Life expectancy,118,72,50,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,310,309,18,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,311,308,9,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,312,Adult life ae,1191,974,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,313,Adult life ae,619,1311,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,314,Adult life ae,76,1370,47,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,315,314,206,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,316,312,104,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,317,313,260,1,0,0,0,0,128,0,-1--1--1,,1|(642,1343)|
+///---\\\
+:L<%^E!@
+1:NEW epi.vdfx
+4:Time
+5:Temperature
+9:NEW epi
+19:100,0
+24:0
+25:611
+26:611
+15:0,0,0,0,0,0
+27:2,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2015
+38:1
+39:1
+40:2
+41:1
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Vensim Sans|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1

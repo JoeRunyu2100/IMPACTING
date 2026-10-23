@@ -1,0 +1,203 @@
+{UTF-8}
+Awareness and trainings  = A FUNCTION OF( Health extension services)
+	~	
+	~		|
+
+Government support and policies  = A FUNCTION OF( VBD cases)
+	~	
+	~		|
+
+Health center availability  = A FUNCTION OF( Government support and policies)
+	~	
+	~		|
+
+Health extension services  = A FUNCTION OF( VBD cases)
+	~	
+	~		|
+
+Household income  = A FUNCTION OF( Medical expenses)
+	~	
+	~		|
+
+Human Migration  = A FUNCTION OF( Human Population)
+	~	
+	~		|
+
+Human Population  = A FUNCTION OF( Human Migration)
+	~	
+	~		|
+
+Infected vectors  = A FUNCTION OF( VBD cases)
+	~	
+	~		|
+
+Informal settlements  = A FUNCTION OF( Household income,Human Population,Urban development\
+		)
+	~	
+	~		|
+
+Medical expenses  = A FUNCTION OF( VBD cases)
+	~	
+	~		|
+
+Sanitation  = A FUNCTION OF( Informal settlements)
+	~	
+	~		|
+
+Trestment measures  = A FUNCTION OF( Health center availability)
+	~	
+	~		|
+
+Urban development  = A FUNCTION OF( Human Migration,Working Population)
+	~	
+	~		|
+
+VBD cases  = A FUNCTION OF( Trestment measures,Vector compentence,Vector exposure)
+	~	
+	~		|
+
+Vector compentence  = A FUNCTION OF( Vector Prevalence and Incidence)
+	~	
+	~		|
+
+Vector Control measures  = A FUNCTION OF( Awareness and trainings,Health center availability\
+		,VBD cases,Vector population)
+	~	
+	~		|
+
+Vector exposure  = A FUNCTION OF( Vector population,Work time exposure Outdoor labor)
+	~	
+	~		|
+
+Vector Habitat  = A FUNCTION OF( Informal settlements,Urban development,Vector Control measures\
+		)
+	~	
+	~		|
+
+Vector population  = A FUNCTION OF( Vector suitability index)
+	~	
+	~		|
+
+Vector Prevalence and Incidence  = A FUNCTION OF( Infected vectors)
+	~	
+	~		|
+
+Vector suitability index  = A FUNCTION OF( Sanitation,Vector Habitat)
+	~	
+	~		|
+
+Work time exposure Outdoor labor  = A FUNCTION OF( Household income,Informal settlements\
+		,Working Population)
+	~	
+	~		|
+
+Working Population  = A FUNCTION OF( Human Population)
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,80,2
+10,1,Vector Habitat,1012,361,38,27,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,2,Sanitation,894,450,50,15,8,131,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,3,Human Migration,457,572,50,27,8,131,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,4,Human Population,601,678,55,27,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,5,Working Population,625,535,55,27,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,6,Work time exposure Outdoor labor,864,662,103,27,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,7,Awareness and trainings,1468,276,77,27,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,8,Vector Control measures,1262,352,76,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,9,Informal settlements,738,441,57,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,10,Urban development,539,398,66,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,11,Trestment measures,1044,222,52,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,12,Health center availability,1283,237,69,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,13,Vector suitability index,1003,484,81,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,14,Health extension services,1438,421,85,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,15,Vector population,1148,453,54,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,16,Government support and policies,874,179,101,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,17,Vector exposure,1011,590,46,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,18,Household income,826,292,55,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,19,Medical expenses,1047,295,46,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,20,Vector compentence,1245,670,68,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,21,Infected vectors,1413,506,43,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,22,Vector Prevalence and Incidence,1412,617,94,27,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+10,23,VBD cases,1243,529,55,15,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|18||0-0-0
+1,24,1,13,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(979,422)|
+1,25,13,15,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1050,437)|
+1,26,15,8,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1214,425)|
+1,27,6,17,0,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(935,626)|
+1,28,5,6,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(673,679)|
+1,29,9,6,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(758,558)|
+1,30,17,23,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1130,574)|
+1,31,15,17,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1077,539)|
+1,32,23,21,1,0,0,0,0,128,0,-1--1--1,,1|(1360,543)|
+1,33,21,22,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1462,558)|
+1,34,22,20,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1334,653)|
+1,35,20,23,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1263,591)|
+1,36,4,5,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(591,606)|
+1,37,10,9,1,0,45,0,10,192,0,-1--1--1,|18||0-0-0,1|(631,438)|
+1,38,4,3,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(517,656)|
+1,39,3,4,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(533,608)|
+1,40,5,10,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(573,477)|
+1,41,3,10,1,0,43,0,10,193,0,-1--1--1,|18||0-0-0,1|(454,472)|
+1,42,4,9,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(693,561)|
+1,43,9,2,1,0,43,0,10,193,0,-1--1--1,|18||0-0-0,1|(811,466)|
+1,44,2,13,1,0,0,0,0,128,0,-1--1--1,,1|(914,491)|
+1,45,9,1,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(885,392)|
+1,46,10,1,1,0,45,0,10,192,0,-1--1--1,|18||0-0-0,1|(765,334)|
+1,47,8,1,0,0,45,0,10,192,0,-1--1--1,|18||0-0-0,1|(1124,356)|
+1,48,7,8,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1369,332)|
+1,49,12,8,0,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1273,287)|
+1,50,16,12,1,0,0,0,0,128,0,-1--1--1,,1|(1157,172)|
+1,51,23,19,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1161,401)|
+1,52,19,18,1,0,45,0,10,192,0,-1--1--1,|18||0-0-0,1|(932,273)|
+10,53,Household income,881,549,62,27,8,2,0,11,-1,0,0,0,128-128-128,0-0-0,|18||128-128-128
+1,54,53,6,1,0,45,0,10,192,0,-1--1--1,|18||0-0-0,1|(853,590)|
+1,55,12,11,0,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1161,229)|
+1,56,53,9,1,0,45,0,10,128,0,-1--1--1,|18||0-0-0,1|(800,504)|
+1,57,14,7,0,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1451,355)|
+1,58,23,14,0,0,0,0,0,128,0,-1--1--1,,1|(1323,484)|
+1,59,23,8,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(1275,447)|
+10,60,VBD cases,661,284,71,13,8,2,0,11,-1,0,0,0,128-128-128,0-0-0,|18||128-128-128
+1,61,60,16,1,0,43,0,10,192,0,-1--1--1,|18||0-0-0,1|(720,228)|
+10,62,Trestment measures,1102,685,59,27,8,2,0,11,-1,0,0,0,128-128-128,0-0-0,|18||128-128-128
+1,63,62,23,1,0,45,0,10,192,0,-1--1--1,|18||0-0-0,1|(1180,614)|
+///---\\\
+:L<%^E!@
+9:Current
+23:0
+15:0,0,0,0,0,0
+19:80,0
+27:0,
+34:0,
+5:VBD cases
+24:0
+25:0
+26:0

@@ -1,0 +1,2773 @@
+{UTF-8}
+Susceptible Human Population= INTEG (
+	Chiku recovered susceptability rate+Deng recovered susceptability rate+YF recovered susceptability rate\
+		-Chiku Biting rates-Dengue Biting rate-YF Bitin rate-Human Death rate+Human birth rate\
+		,
+		Human Population)
+	~	People
+	~	Human Population*((Deng PP biting rate-Deng weakening immunity rate)+(Chiku People \
+		biting rate-Chiku weak immunity rate
+		)+(Yellow fever pp biting rate-Yellow fever weak immunity rate))
+	|
+
+Urban sanitation effect= WITH LOOKUP (
+	Urbanization Index,
+		([(0,0)-(10,10)],(0,0.001),(0.2,0.009),(0.4,0.04),(0.6,0.09),(0.8,0.1),(1,0.3) ))
+	~	Dmnl
+	~		|
+
+Effect of infected population= WITH LOOKUP (
+	Total Infected Human Population,
+		([(0,0)-(1000,1)],(0,0),(125.382,0.09649),(299.694,0.1711),(446.483,0.1974),(510.703\
+		,0.2719),(629.969,0.3728),(795.107,0.4474),(892.966,0.5263),(990.826,0.6316) ))
+	~	Dmnl
+	~	RANDOM UNIFORM ( 0.04 , 0.1 ,1000 )
+	|
+
+Poor sanitation effect=
+	(RANDOM UNIFORM ( 10 , 20 , 1000 ))/1000
+	~	Dmnl
+	~		|
+
+Chiku Biting rates=
+	Susceptible Human Population*Monthly risk factor*Aedes Chiku Competence
+	~	People/Month
+	~		|
+
+Government support in medical costs=
+	1
+	~	Dmnl
+	~		|
+
+Health extension services=
+	1
+	~	Dmnl
+	~		|
+
+YF Bitin rate=
+	Susceptible Human Population*Monthly risk factor*YF Aedes Competence
+	~	People/Month
+	~		|
+
+Dengue Biting rate=
+	Susceptible Human Population*Deng Aedes Competence*Monthly risk factor
+	~	People/Month
+	~		|
+
+Workforce loss rate=
+	Productivity loss*Effect of infected population*Labor Force
+	~	People/Month
+	~		|
+
+Healthcare availability rate=
+	(Workers availability*Health centers available)*Health extension services
+	~	1/Month
+	~		|
+
+Total VBD infection cases=
+	Total Infected Human Population/1000
+	~	Dmnl
+	~	(RANDOM UNIFORM ( 10 , 20 , 1000 ))/1000
+	|
+
+waste accumulation rate=
+	Waste per population*Waste accumulation*Poor sanitation effect
+	~	1/Month
+	~		|
+
+Risk accumulation rate=
+	(Informal Settlement Index+Sanitation index)*Risk accumulation factor*Outdoor Vector Exposure
+	~	1/Month
+	~		|
+
+Outdoor Vector Exposure=
+	Aedes Suitability Index*(ChikuV Infected Aedes Adults+DengV Infected Aedes Adults+YFV Infected Aedes Adults\
+		)*Infected vector occurrence
+	~	
+	~		|
+
+Infected vector occurrence=
+	15/24
+	~	
+	~		|
+
+Healthcare affordability rate=
+	Treatment Measures Index*Treatment costs*Government support in medical costs
+	~	1/Month
+	~		|
+
+Ae Egg mortality rate=
+	Aedes Eggs*Egg mortality probability
+	~	Aedes/Month
+	~		|
+
+Egg mortality probability=
+	IF THEN ELSE(Aedes Adults>Aedes Carrying capacity, (RANDOM UNIFORM(0.5, 0.725, 1000)\
+		) , (RANDOM UNIFORM(0.25, 0.5, 1000)) )
+	~	1/Month
+	~		|
+
+Deng Human contact infection rate=
+	(Deng Vector to human contact)*Host Socioeconomic Risk
+	~	1/Month
+	~		|
+
+YF Human contact infection rate=
+	(Yellow Fever Vector to human contact)*Host Socioeconomic Risk
+	~	1/Month
+	~		|
+
+Chik Human contact infection rate=
+	(Chiku Vector to human contact)*Host Socioeconomic Risk
+	~	1/Month
+	~		|
+
+Aedes Suitability Index=
+	RANDOM UNIFORM(0, 1, 1000)
+	~	Dmnl
+	~		|
+
+Chikungunya Exposed HP= INTEG (
+	MAX((Chiku Biting rates-Chiku Exposed induced mortality rate-Chikufever intriscic incubation rate\
+		), 0),
+		0)
+	~	People
+	~		|
+
+Labor Force= INTEG (
+	Workforce growth rate-Workforce loss rate,
+		200000)
+	~	People
+	~		|
+
+YellowFever Exposed HP= INTEG (
+	MAX(0, (YF Bitin rate-YF Exposed induced mortality rate-YF intriscic incubation rate\
+		)),
+		0)
+	~	People
+	~		|
+
+Dengue Exposed HP= INTEG (
+	MAX((Dengue Biting rate-Den Ae intriscic incubation rate-Deng Exposed induced mortality rate\
+		), 0),
+		0)
+	~	People
+	~		|
+
+Informal settlements Population=
+	Human Population*Informal Settlement Index*informal settlement preference
+	~	People
+	~		|
+
+Awareness decrease rate=
+	Local misconceptions*misconceptions spread rate*VBD Awareness index
+	~	1/Month
+	~		|
+
+Economic growth index=
+	((Labor Force/Human Population)*Social networks impact*Development monthly rate)/Governance and Policy impact
+	~	Dmnl
+	~		|
+
+Chikungunya Infected Aedes region density=
+	ChikuV Infected Aedes Adults/Aedes Adults
+	~	Dmnl
+	~		|
+
+Yellow Fever Infected Aedes region density=
+	YFV Infected Aedes Adults/Aedes Adults
+	~	Dmnl
+	~		|
+
+undermangement rate=
+	(Region human management probability/Regional services availability)*Sanitation index\
+		*Sanitation Frequency
+	~	1/Month
+	~		|
+
+Urbanization Index= INTEG (
+	Region development rate,
+		0.01)
+	~	Dmnl
+	~		|
+
+Informal Settlement Index= INTEG (
+	undermangement rate,
+		0.001)
+	~	Dmnl
+	~		|
+
+Region development rate=
+	Region urban growth*Region growth index
+	~	1/Month
+	~		|
+
+Reservoir LPopulation Chiku= INTEG (
+	InfCh vector biting rate-Animal Chik resistance rate,
+		0)
+	~	Livestock
+	~		|
+
+Livestock Population= INTEG (
+	Livestock birth rate-Livestock death rate,
+		100)
+	~	Livestock
+	~		|
+
+Chik V2A transmission=
+	(RANDOM UNIFORM(2, 6, 1000))/30
+	~	1/Month
+	~		|
+
+Animal dengV antibody dvpt=
+	0.8
+	~	1/Month
+	~		|
+
+Animal resistance rate=
+	Reservoir LPopulation Deng*Animal dengV antibody dvpt
+	~	Livestock/Month
+	~		|
+
+Animal YF resistance rate=
+	Reservoir LPopulation YellowFe*Animal YFV antibody dvpt
+	~	Livestock/Month
+	~		|
+
+Susceptible Livestock population= INTEG (
+	Livestock birth rate-Inf Deng vector biting rate-Inf Yf Vect Biting rate-InfCh vector biting rate\
+		-Livestock death rate,
+		0)
+	~	Livestock
+	~		|
+
+Dengue V2A transmission=
+	(RANDOM UNIFORM(2, 7, 1000))/30
+	~	1/Month
+	~		|
+
+Reservoir LPopulation Deng= INTEG (
+	Inf Deng vector biting rate-Animal resistance rate,
+		0)
+	~	Livestock
+	~		|
+
+Reservoir LPopulation YellowFe= INTEG (
+	Inf Yf Vect Biting rate-Animal YF resistance rate,
+		0)
+	~	Livestock
+	~		|
+
+Animal ChikV antibody dvpt=
+	0.9
+	~	1/Month
+	~		|
+
+InfCh vector biting rate=
+	Susceptible Livestock population*(ChikuV Infected Aedes Adults/Aedes Adults)*Chik V2A transmission
+	~	Livestock/Month
+	~		|
+
+Inf Deng vector biting rate=
+	Susceptible Livestock population*Dengue V2A transmission*(DengV Infected Aedes Adults\
+		/Aedes Adults)
+	~	Livestock/Month
+	~		|
+
+YF V2A transmission=
+	(RANDOM UNIFORM(3, 6, 1000))/30
+	~	1/Month
+	~		|
+
+Livestock death rate=
+	Livestock Population/Livestock lifespan
+	~	Livestock/Month
+	~		|
+
+Livestock birth rate=
+	Livestock Births*Livestock Population
+	~	Livestock/Month
+	~		|
+
+Inf Yf Vect Biting rate=
+	Susceptible Livestock population*(YFV Infected Aedes Adults/Aedes Adults)*YF V2A transmission
+	~	Livestock/Month
+	~		|
+
+Animal Chik resistance rate=
+	Reservoir LPopulation Chiku*Animal ChikV antibody dvpt
+	~	Livestock/Month
+	~		|
+
+Animal YFV antibody dvpt=
+	0.8
+	~	1/Month
+	~		|
+
+YF prevention rate=
+	Risk of Yellow Fever Infection*Control measures frequency Aedes
+	~	1/Month
+	~		|
+
+Dengue prevention rate=
+	Risk of Dengue Infection*Control measures frequency Aedes
+	~	1/Month
+	~		|
+
+Chiku prevention rate=
+	Risk of Chikungunya Infection*Control measures frequency Aedes
+	~	1/Month
+	~		|
+
+Aedes VBD recovered rate=
+	Chiku recovered susceptability rate+Deng recovered susceptability rate+YF recovered susceptability rate
+	~	People/Month
+	~		|
+
+Chikungunya Recovered HP= INTEG (
+	MAX((Chiku PP recovery rate-Chiku R mortality rate-Chiku recovered susceptability rate\
+		), 0),
+		0)
+	~	People
+	~		|
+
+Dengue Recovered HP= INTEG (
+	MAX((Deng PP recovery rate-Deng R mortality rate-Deng recovered susceptability rate)\
+		, 0),
+		0)
+	~	People
+	~		|
+
+Chiku R mortality rate=
+	Chikungunya Recovered HP*Chiku R mortality probability
+	~	People/Month
+	~		|
+
+Deng recovered susceptability rate=
+	Dengue Recovered HP*(Dengue Prevalance/Implemented Dengue control measures)
+	~	People/Month
+	~		|
+
+Chiku recovered susceptability rate=
+	Chikungunya Recovered HP*(Chiku Prevalance/Chikungunya control measures efficiency)
+	~	People/Month
+	~		|
+
+Monthly risk factor=
+	0.01
+	~	1/Month
+	~		|
+
+YF recovered susceptability rate=
+	YellowFever Recovered HP*(Yellow Fever Prevalance/Yellow fever control measures)
+	~	People/Month
+	~		|
+
+YellowFever Recovered HP= INTEG (
+	MAX(0, (YF PP recovery rate-YF R mortality rate-YF recovered susceptability rate)),
+		0)
+	~	People
+	~		|
+
+Pupa2Adult time=
+	(RANDOM UNIFORM(0.52,0.63, 1000))
+	~	Month
+	~		|
+
+Climate effect on larva= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(32,1)],(0,0),(15,0.05),(20,0.25),(22,0.5),(24,0.9),(28,0.56),(30,0.39),(32\
+		,0) ))
+	~	Dmnl
+	~		|
+
+Climate effect on pupa= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(32,1)],(0,0),(15,0.03),(20,0.15),(22,0.3),(24,0.7),(28,0.46),(30,0.39),(32\
+		,0) ))
+	~	Dmnl
+	~		|
+
+Larval2pupa=
+	(RANDOM UNIFORM(0.42,0.67, 1000))
+	~	1/Month
+	~		|
+
+ChikV exposition rate=Aedes ready to bite humans*Number of bites per Aedes per month*\
+		ChikV Incidence
+	~	Aedes/Month
+	~		|
+
+Susceptible Female Aedes Adults= INTEG (Emerging females-Aedes S mortality rate-(0*(ChikV exposition rate\
+		-Dengue exposition rate-YF exposition rate)),
+		0)
+	~	Aedes
+	~		|
+
+YF exposition rate=Aedes ready to bite humans*Number of bites per Aedes per month*YF Incidence
+	~	Aedes/Month
+	~		|
+
+ChikuV Exposed Aedes Adults= INTEG (ChikV exposition rate-Aedes ChikV infectious rate\
+		-ChikV Exposed mortality rate,
+		0)
+	~	Aedes
+	~		|
+
+Dengue exposition rate=Aedes ready to bite humans*DenV Incidence*Number of bites per Aedes per month
+	~	Aedes/Month
+	~		|
+
+YFV Exposed Aedes Adults= INTEG (YF exposition rate-Aedes YF infectious rate-YF Exposed mortality rate\
+		,
+		0)
+	~	Aedes
+	~		|
+
+DengV Exposed Aedes Adults= INTEG (Dengue exposition rate-Aedes Deng infectious rate-\
+		DenV Exposed mortality rate,
+		0)
+	~	Aedes
+	~		|
+
+ChikV Extrinsic Incubation period= WITH LOOKUP (
+	Regional Temperature*Temp effect,
+		([(0,0)-(40,50)],(0,0),(10,30),(15,15),(20,10),(22,3.5),(24,3.2),(28,2.8),(30,2),(35\
+		,5) ))
+	~	Month
+	~		|
+
+Temp effect=1
+	~	Month
+	~		|
+
+YFV Extrinsic Incubation period= WITH LOOKUP (
+	Regional Temperature*Temp effect,
+		([(0,0)-(40,50)],(0,0),(10,15),(15,12),(20,10),(22,9),(24,9),(28,7.5),(30,7.5),(35,\
+		5) ))
+	~	Month
+	~		|
+
+Delay Chiku I=6
+	~	Month
+	~		|
+
+Chikufever intriscic incubation rate=DELAY1 (Chikungunya Exposed HP/Chiku Intrinsic incubation period\
+		 , Delay Chiku I )
+	~	People/Month
+	~		|
+
+YF intriscic incubation rate=DELAY1 (YellowFever Exposed HP/YF Intrinsic incubation period\
+		 , Delay YF I )
+	~	People/Month
+	~		|
+
+Den Ae intriscic incubation rate=DELAY1 ( Dengue Exposed HP/Deng Intrinsic incubation period\
+		 ,Delay Deng I )
+	~	People/Month
+	~		|
+
+Chiku R mortality probability=0.4
+	~	1/Month
+	~		|
+
+YF R mortality probability=0.5
+	~	1/Month
+	~		|
+
+Delay Deng I=4
+	~	Month
+	~		|
+
+Delay YF I=1.5
+	~	Month
+	~		|
+
+Deng R mortality probability=0.5
+	~	1/Month
+	~		|
+
+Deng R mortality rate=Dengue Recovered HP*Deng R mortality probability
+	~	People/Month
+	~		|
+
+YF R mortality rate=YellowFever Recovered HP*YF R mortality probability
+	~	People/Month
+	~		|
+
+Sanitation Frequency=1
+	~	1/Month
+	~	(Region human management probability/Regional services \
+		availability)*Sanitation index*Sanitation Frequency
+	|
+
+Total VBDs deaths=
+	(Chikungunya VBD Human deaths+Deng VBD Human deaths+Yellow Fever VBD Human deaths)*Human deaths daily factor
+	~	People
+	~		|
+
+Region growth index=
+	0.00561
+	~	1/Month
+	~		|
+
+Human deaths daily factor=1
+	~	Month
+	~		|
+
+Risk accumulation factor=1
+	~	1/Month
+	~		|
+
+Control measures frequency Aedes=1/12
+	~	1/Month
+	~		|
+
+Development monthly rate=
+	1/30
+	~	1/Month
+	~		|
+
+"24 hour working system"=
+	18/24
+	~	Dmnl
+	~		|
+
+Livestock lifespan=
+	12*(RANDOM UNIFORM(2, 4.5 , 1000))
+	~	Month
+	~		|
+
+Yellow Fever Prevalance=RANDOM UNIFORM (0.04 , 0.1 , 1000 )
+	~	1/Month
+	~		|
+
+Chiku Intrinsic incubation period=4
+	~	Month
+	~		|
+
+Human Chiku Immune system=0.4
+	~	Dmnl
+	~		|
+
+ChikV Vector Infected deaths=
+	0.57
+	~	1/Month
+	~		|
+
+Human Deng Immune system recovery rate=0.4
+	~	1/Month
+	~		|
+
+Human Health effect on emmigration= WITH LOOKUP (
+	((Total Human deaths*0.4)+(Total Infected Human Population*0.7))/10000,
+		([(0,0)-(10,1)],(0,0), (2,0.05), (4.5,0.15), (6.8,0.3), (8.5,0.45), (10,0.7)))
+	~	Dmnl
+	~		|
+
+Treatment costs=RANDOM UNIFORM ( 0.09 , 0.7 , 1000 )
+	~	1/Month
+	~		|
+
+YF exposed mortalities=0.4
+	~	1/Month
+	~		|
+
+Deng Exp Humans mortality=0.4
+	~	1/Month
+	~		|
+
+Human YF Immune system response rate=0.5
+	~	1/Month
+	~		|
+
+Immigration rate=
+	RANDOM UNIFORM (0.0032 , 0.012 , 1000 )
+	~	1/Month
+	~	Incoming
+	|
+
+Implemented Dengue control measures=RANDOM UNIFORM (20 , 40 , 100)
+	~	Dmnl
+	~		|
+
+Deng Inf mortality=0.8
+	~	1/Month
+	~		|
+
+Workforce growth rate=Human Population employed*Region Employment rate*"24 hour working system"
+	~	People/Month
+	~		|
+
+Infrastructure formation=
+	(0.1-infrastructure development index)/infrastructure development index
+	~	Dmnl
+	~		|
+
+Awareness increase rate=Total VBD infection cases*VBD Awareness campains
+	~	1/Month
+	~		|
+
+Health centers available=1-RANDOM UNIFORM ( 0.09 , 0.7 , 1000 )
+	~	1/Month
+	~		|
+
+Livestock Births=
+	RANDOM UNIFORM(0.025, 0.045, 1000)
+	~	1/Month
+	~		|
+
+Yellow fever infected deaths=(RANDOM UNIFORM (3 , 7.5 , 1000 ) )/100
+	~	1/Month
+	~		|
+
+Host Socioeconomic Risk= INTEG (Risk accumulation rate-Risk reduction rate,
+		0.1)
+	~	Dmnl
+	~		|
+
+Dengue Applied treatment measure=RANDOM UNIFORM ( 10 , 20 , 1000 )
+	~	Dmnl
+	~		|
+
+Chikufever infected mortalities=0.7
+	~	1/Month
+	~		|
+
+misconceptions spread rate=0.5
+	~	1/Month
+	~		|
+
+ChikV Vector Exposed deaths=0.4
+	~	1/Month
+	~		|
+
+Chiku Prevalance=0.2
+	~	1/Month
+	~		|
+
+Dengue Prevalance=0.7
+	~	1/Month
+	~		|
+
+Regional services availability=
+	100
+	~	People/m2
+	~		|
+
+Governance and Policy impact=1
+	~	People/Month
+	~		|
+
+Productivity loss=RANDOM UNIFORM (0.3 , 0.75 , 1000 )
+	~	1/Month
+	~		|
+
+VBD Awareness campains=
+	RANDOM UNIFORM ( 3 , 14 ,1000)
+	~	1/Month
+	~		|
+
+Chikufever Applied treatment measures=RANDOM UNIFORM (4 , 10 , 200 )
+	~	Month
+	~		|
+
+Chikufever exposed mortalities=0.4
+	~	1/Month
+	~		|
+
+YFV Vector Infected deaths=
+	0.57
+	~	1/Month
+	~		|
+
+YF Intrinsic incubation period=RANDOM UNIFORM (3, 4, 1000 )
+	~	Month
+	~		|
+
+Workers availability=1
+	~	Dmnl
+	~		|
+
+Chikungunya control measures efficiency=RANDOM UNIFORM (10 , 30 , 100)
+	~	Dmnl
+	~		|
+
+Emmigration rate=
+	RANDOM UNIFORM (0.002 , 0.012 , 1000 )
+	~	1/Month
+	~	leaving
+	|
+
+Deng Intrinsic incubation period=4
+	~	Month
+	~		|
+
+YEllow Fever Applied treatment measures efficiency=1
+	~	Dmnl
+	~		|
+
+Risk reduction rate=(VBD Awareness index+Treatment Measures Index)*infrastructure development index
+	~	1/Month
+	~		|
+
+YFV Vector Exposed deaths=0.5
+	~	1/Month
+	~		|
+
+Local misconceptions=RANDOM UNIFORM(0.02,0.1,1000)
+	~	Dmnl
+	~		|
+
+Yellow fever control measures=RANDOM UNIFORM ( 1 , 2.5 , 1000 )
+	~	Dmnl
+	~		|
+
+Breeding site nature=(Natural breeding site+Artificial breeding site)*Breeding habitat characteristics preference
+	~	Dmnl
+	~		|
+
+Artificial breeding site=(Regional Precipitation/Optimal Rainfall Ae)*0.5
+	~	Dmnl
+	~		|
+
+YF Humidity=RANDOM UNIFORM ( 50 , 80 , 1000 )
+	~	Dmnl
+	~		|
+
+YF Temp=RANDOM UNIFORM ( 20 , 28 , 1000)
+	~	Dmnl
+	~		|
+
+Chiku Humidity=RANDOM UNIFORM ( 50 , 80 , 1000 )
+	~	Dmnl
+	~		|
+
+YF Rainfall=RANDOM UNIFORM ( 50 , 100 , 1000 )
+	~	Dmnl
+	~		|
+
+Chiku Temp=RANDOM UNIFORM ( 20 , 28 , 1000)
+	~	Dmnl
+	~		|
+
+Chiku Rainfall=RANDOM UNIFORM ( 50 , 100 , 1000 )
+	~	Dmnl
+	~		|
+
+Aedes Pupa dvpt rate=(Aedes Larva*Climate effect on larva)*Larval2pupa
+	~	Aedes/Month
+	~		|
+
+Aedes Adults dvpt rate=(Aedes Pupa/Pupa2Adult time)*Climate effect on pupa
+	~	Aedes/Month
+	~		|
+
+Aedes Larva dvpt rate=Aedes Eggs*(Hatching rate*Egg2Larval)
+	~	Aedes/Month
+	~		|
+
+Pupa mortality probability=
+	RANDOM UNIFORM(0.5, 0.7, 1000)
+	~	1/Month
+	~		|
+
+Ae larva mortality rate=Aedes Larva*Larva mortality probability
+	~	Aedes/Month
+	~		|
+
+Ae pupa mortality rate=Aedes Pupa*Pupa mortality probability
+	~	Aedes/Month
+	~		|
+
+Aedes Pupa= INTEG (Aedes Pupa dvpt rate-Ae pupa mortality rate-Aedes Adults dvpt rate\
+		,
+		0)
+	~	Aedes
+	~		|
+
+Aedes Larva= INTEG (Aedes Larva dvpt rate-Ae larva mortality rate-Aedes Pupa dvpt rate\
+		,
+		0)
+	~	Aedes
+	~		|
+
+Larva mortality probability=
+	(RANDOM UNIFORM(0.4, 0.6, 1000))
+	~	1/Month
+	~		|
+
+Human births=
+	1.98002/1000
+	~	1/Month
+	~		|
+
+Natural breeding site=RANDOM UNIFORM ( 0.04 , 0.6 , 1000 )
+	~	Dmnl
+	~		|
+
+DenV Incidence=
+	Region Initial Dengue incidence+(Probability of infected dengue vector from biting infected human\
+		*(Dengue Infected HP/Human Population
+	))
+	~	Dmnl
+	~		|
+
+Aedes Female Susceptible mortality factor=0.4
+	~	1/Month
+	~		|
+
+Human lifespan=
+	12*RANDOM UNIFORM (46 , 100 , 1000 )
+	~	Month
+	~		|
+
+Human Population= INTEG (
+	Human birth rate+Human imigration rate-Human Death rate,
+		122800)
+	~	People
+	~		|
+
+Human imigration rate=
+	Human Population*((Immigration rate-Emmigration rate)*Human Health effect on emmigration\
+		)
+	~	People/Month
+	~		|
+
+DenV Vector Infected deaths=
+	0.57
+	~	1/Month
+	~		|
+
+Deng Humidity=RANDOM UNIFORM ( 50 , 80 , 1000 )
+	~	Dmnl
+	~		|
+
+DenV Vector Exposed deaths=0.6
+	~	1/Month
+	~		|
+
+Dengue Temp=RANDOM UNIFORM ( 20 , 28 , 1000)
+	~	Dmnl
+	~		|
+
+Deng Rainfall=RANDOM UNIFORM ( 50 , 100 , 1000 )
+	~	Dmnl
+	~		|
+
+Total Infected Human Population=Chikungunya Infected HP+Dengue Infected HP+YellowFever Infected HP
+	~	People
+	~		|
+
+Aedes ChikV infectious rate=ChikuV Exposed Aedes Adults/ChikV Extrinsic Incubation period
+	~	Aedes/Month
+	~		|
+
+Den PP induced mortality rate=Dengue Infected HP*Deng Inf mortality
+	~	People/Month
+	~		|
+
+Aedes YF infectious rate=YFV Exposed Aedes Adults/YFV Extrinsic Incubation period
+	~	Aedes/Month
+	~		|
+
+Deng Exposed induced mortality rate=Dengue Exposed HP*Deng Exp Humans mortality
+	~	People/Month
+	~		|
+
+Deng PP recovery rate=(Dengue Infected HP*Human Deng Immune system recovery rate)/(Dengue Applied treatment measure\
+		)
+	~	People/Month
+	~		|
+
+Chiku Exposed induced mortality rate=Chikungunya Exposed HP*Chikufever exposed mortalities
+	~	People/Month
+	~		|
+
+Chiku PP induced mortality rate=Chikungunya Infected HP*Chikufever infected mortalities
+	~	People/Month
+	~		|
+
+Chiku PP recovery rate=Chikungunya Infected HP/(Chikufever Applied treatment measures\
+		*Human Chiku Immune system)
+	~	People/Month
+	~		|
+
+Chiku Vector to human contact=Chikungunya Infected Aedes region density*(Host Daytime exposure\
+		)
+	~	1/Month
+	~		|
+
+Chikungunya Climate factor=
+	((Regional Precipitation-Chiku Rainfall)/Regional Precipitation)+((Regional Humidity\
+		-Chiku Humidity)/Regional Humidity)+((Regional Temperature-Chiku Temp)/Regional Temperature\
+		)
+	~	Dmnl
+	~		|
+
+Chikungunya VBD Human deaths=Chiku Exposed induced mortality rate+Chiku PP induced mortality rate
+	~	People/Month
+	~		|
+
+Chikungunya Prefered climate=
+	IF THEN ELSE((Optimal Aedes VBD Climate effect:AND:Chikungunya Climate factor>=1), RANDOM UNIFORM\
+		(0.5, 1 , 100), 0)
+	~	Month
+	~		|
+
+ChikuV Infected Aedes Adults= INTEG (
+	Aedes ChikV infectious rate-ChikV induced Mortality rate,
+		0)
+	~	Aedes
+	~		|
+
+Chikungunya Infected HP= INTEG (
+	MAX((Chikufever intriscic incubation rate-Chiku PP recovery rate-Chiku PP induced mortality rate\
+		), 0),
+		0)
+	~	People
+	~		|
+
+ChikV Exposed mortality rate=ChikV Vector Exposed deaths*ChikuV Exposed Aedes Adults
+	~	Aedes/Month
+	~		|
+
+Probability of vector ChikV infection from biting infected human=
+	1
+	~	Dmnl
+	~		|
+
+ChikV Incidence=
+	Region Initial ChikV incidence+(Probability of vector ChikV infection from biting infected human\
+		*(Chikungunya Infected HP/Human Population))
+	~	Dmnl
+	~		|
+
+ChikV induced Mortality rate=ChikuV Infected Aedes Adults*ChikV Vector Infected deaths
+	~	Aedes/Month
+	~		|
+
+Yellow Fever Vector to human contact=Yellow Fever Infected Aedes region density*(Host Daytime exposure\
+		)
+	~	1/Month
+	~		|
+
+YF Exposed mortality rate=YFV Vector Exposed deaths*YFV Exposed Aedes Adults
+	~	Aedes/Month
+	~		|
+
+Aedes Chiku Competence=(Number of bites per Aedes per month*Chikungunya Prefered climate\
+		)
+	~	Dmnl
+	~		|
+
+YF Incidence=
+	Region Initial Yellow fever incidence+(Probability of vector YF infection from biting infected human\
+		*(YellowFever Infected HP/Human Population))
+	~	Dmnl
+	~		|
+
+YF induced Mortality rate=YFV Infected Aedes Adults*YFV Vector Infected deaths
+	~	Aedes/Month
+	~		|
+
+Dengue Infected HP= INTEG (
+	MAX((Den Ae intriscic incubation rate-Deng PP recovery rate-Den PP induced mortality rate\
+		), 0),
+		0)
+	~	People
+	~		|
+
+YellowFever Infected HP= INTEG (
+	MAX((YF intriscic incubation rate-YF PP recovery rate-YF PP induced mortality rate),\
+		 0),
+		0)
+	~	People
+	~		|
+
+Deng VBD Human deaths=Deng Exposed induced mortality rate+Den PP induced mortality rate
+	~	People/Month
+	~		|
+
+Yellow Fever VBD Human deaths=YF Exposed induced mortality rate+YF PP induced mortality rate
+	~	People/Month
+	~		|
+
+YF PP induced mortality rate=YellowFever Infected HP*Yellow fever infected deaths
+	~	People/Month
+	~		|
+
+YF Aedes Competence=(Number of bites per Aedes per month*YF Prefered climate)
+	~	Dmnl
+	~		|
+
+YF Exposed induced mortality rate=YellowFever Exposed HP*YF exposed mortalities
+	~	People/Month
+	~		|
+
+YFV Infected Aedes Adults= INTEG (
+	Aedes YF infectious rate-YF induced Mortality rate,
+		0)
+	~	Aedes
+	~		|
+
+Region Initial ChikV incidence=0.001
+	~	Dmnl
+	~		|
+
+Region Initial Yellow fever incidence=0.001
+	~	Dmnl
+	~		|
+
+YF PP recovery rate=YellowFever Infected HP*(YEllow Fever Applied treatment measures efficiency\
+		*Human YF Immune system response rate)
+	~	People/Month
+	~		|
+
+YF Prefered climate=
+	IF THEN ELSE((Optimal Aedes VBD Climate effect:AND:Yellow Fever Climate factor>=1), \
+		RANDOM UNIFORM(0.5, 1 , 100), 0)
+	~	Month
+	~		|
+
+Yellow Fever Climate factor=
+	((Regional Precipitation-YF Rainfall)/Regional Precipitation)+((Regional Humidity-YF Humidity\
+		)/Regional Humidity)+((Regional Temperature-YF Temp)/Regional Temperature)
+	~	Dmnl
+	~		|
+
+Probability of vector YF infection from biting infected human=
+	1
+	~	Dmnl
+	~		|
+
+Risk of Yellow Fever Infection= INTEG (
+	YF Human contact infection rate-YF prevention rate,
+		0)
+	~	Dmnl
+	~		|
+
+Risk of Chikungunya Infection= INTEG (
+	Chik Human contact infection rate-Chiku prevention rate,
+		0)
+	~	Dmnl
+	~		|
+
+Treatment Measures Index= INTEG (Healthcare availability rate-Healthcare affordability rate\
+		,
+		0)
+	~	Dmnl
+	~		|
+
+Control Measures implemetation=1/12
+	~	Dmnl
+	~		|
+
+VBD Awareness index= INTEG (Awareness increase rate-Awareness decrease rate,
+		0)
+	~	Dmnl
+	~		|
+
+Region Employment rate=0.0075
+	~	1/Month
+	~		|
+
+Human Population employed=Human Population*0.25
+	~	People
+	~		|
+
+informal settlement preference=0.02
+	~	Dmnl
+	~		|
+
+infrastructure development index=
+	RANDOM UNIFORM ( 0.024 ,0.058 ,1000 )
+	~	1/Month
+	~		|
+
+Total Human deaths=Total VBDs deaths
+	~	People
+	~		|
+
+sewage treatment frequency=(RANDOM UNIFORM ( 10 , 20 , 1000 ) )/365
+	~	Month
+	~		|
+
+Region Initial Dengue incidence=0.001
+	~	Dmnl
+	~		|
+
+Region Area=
+	1e+06
+	~	m2
+	~		|
+
+Waste per population=
+	(RANDOM UNIFORM(0.3, 0.1, 1000))/1000
+	~	Dmnl
+	~		|
+
+Region human management probability=Human population density*0.025
+	~	People/m2
+	~		|
+
+Drainage coverage=
+	1
+	~	Dmnl
+	~		|
+
+Waste accumulation=1000
+	~	1/Month
+	~		|
+
+Aedes Control measures=
+	(((Treatment Measures Index*VBD Awareness index)*Sanitation index))
+	~	Dmnl
+	~	Number of control measures/year
+	|
+
+Human population density=Human Population/Region Area
+	~	People/m2
+	~		|
+
+Dengue Climate factor=
+	((Regional Precipitation-Deng Rainfall)/Regional Precipitation)+((Regional Humidity-\
+		Deng Humidity)/Regional Humidity)+((Regional Temperature-Dengue Temp)/Regional Temperature\
+		)
+	~	Dmnl
+	~		|
+
+Dengue Prefered climate=
+	IF THEN ELSE((Optimal Aedes VBD Climate effect:AND:Dengue Climate factor>=1), RANDOM UNIFORM\
+		(0.5, 1 , 100), 0)
+	~	Month
+	~		|
+
+Breeding site rain= WITH LOOKUP (
+	Regional Precipitation,
+		([(0,0)-(500,10)],(0,0),(20,0.001),(40,0.04),(60,0.09),(80,0.3),(100,0.8),(150,1),(\
+		200,0.9),(250,0.8),(300,0.001),(500,0) ))
+	~	Month
+	~		|
+
+Host Daytime exposure=5/24
+	~	1/Month
+	~	Early morning and evening hours =
+	|
+
+Availability of blood=(Human Blood Preference+Livestock blood preference)*Aedes siting in region
+	~	1/Month
+	~		|
+
+Risk of Dengue Infection= INTEG (
+	Deng Human contact infection rate-Dengue prevention rate,
+		0)
+	~	Dmnl
+	~		|
+
+Probability of infected dengue vector from biting infected human=
+	1
+	~	Dmnl
+	~		|
+
+Dengue Infected Aedes region density=
+	DengV Infected Aedes Adults/Aedes Adults
+	~	Dmnl
+	~		|
+
+Aedes ready to bite humans=
+	Susceptible Female Aedes Adults*Factor Adjusting exposition
+	~	Aedes
+	~		|
+
+Aedes Deng infectious rate=DengV Exposed Aedes Adults/DenV Extrinsic Incubation period
+	~	Aedes/Month
+	~		|
+
+DenV Exposed mortality rate=DengV Exposed Aedes Adults*DenV Vector Exposed deaths
+	~	Aedes/Month
+	~		|
+
+DengV Infected Aedes Adults= INTEG (
+	Aedes Deng infectious rate-DenV induced Mortality rate,
+		0)
+	~	Aedes
+	~		|
+
+DenV induced Mortality rate=DengV Infected Aedes Adults*DenV Vector Infected deaths
+	~	Aedes/Month
+	~		|
+
+Aedes S mortality rate=Aedes Female Susceptible mortality factor*Susceptible Female Aedes Adults
+	~	Aedes/Month
+	~		|
+
+females ready to bite=0.9
+	~	1/Month
+	~		|
+
+Breeding habitat characteristics preference=0.1
+	~	Dmnl
+	~	Which kind of materials are used as sites: Tyres, water potholes, lakes, \
+		containers, flowers
+	|
+
+Human birth rate=
+	Human births*Human Population
+	~	People/Month
+	~		|
+
+Human Blood Preference= WITH LOOKUP (
+	Human Population/1000,
+		([(0,0)-(200,10)],(1,0.1),(10,0.3),(30,0.9),(50,1.5),(100,2.5),(150,3.2),(200,3.6) \
+		))
+	~	Dmnl
+	~		|
+
+Human Death rate=Human Population/Human lifespan
+	~	People/Month
+	~		|
+
+Livestock blood preference= WITH LOOKUP (
+	Livestock Population,
+		([(0,0)-(10,10)],(0,0),(0.5,0.3),(1,0.8),(1.5,1.2),(2.5,1.8),(4,2.2807),(5.84098,2.7193\
+		),(7.67584,3.55263),(8.96024,3.77193),(9.93884,4.42982) ))
+	~	Dmnl
+	~		|
+
+Factor Adjusting exposition=
+	1
+	~	Dmnl
+	~		|
+
+Number of bites per Aedes per month=
+	1.0087*4
+	~	1/Month
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+Waste removal rate=
+	Sanitation index*(Drainage coverage/sewage treatment frequency)*Urban sanitation effect
+	~	1/Month
+	~		|
+
+Region urban growth=
+	((Economic growth index+Infrastructure formation))
+	~	Dmnl
+	~		|
+
+Aedes Carrying capacity=
+	Aedes Carrying capacity maximum*(Regional Precipitation/Rainfall threshold)*Aedes Suitability Index
+	~	Aedes
+	~	1+Carrying capacity maximum*(Rainfall/(Rainfall threshold*Rain accumulation time))
+		+Carrying capacity maximum+((DELAY N(Rainfall, Rain accumulation time, 10, \
+		2))/(Rainfall threshold^0.5))*Carrying capacity maximum
+	|
+
+Aedes Region Suitability=
+	Aedes Suitability Index*(IF THEN ELSE ( Aedes Climate development effect>=1 , (Aedes siting in region\
+		*Breeding site rain) , 0.007 ))
+	~	Dmnl
+	~		|
+
+Average monthly number of eggs per female=
+	(Mean number of eggs laid per day/Temp effect on Egg laying)*TIME STEP
+	~	1/Month
+	~		|
+
+Adjusting factor humidity mean egg=
+	30
+	~	1/Month
+	~		|
+
+Aedes Adults= INTEG (
+	Aedes Adults dvpt rate-Aedes mortality rate,
+		2)
+	~	Aedes
+	~		|
+
+Aedes mortality=
+	(RANDOM UNIFORM(8, 15, 1000))/30
+	~	1/Month
+	~		|
+
+Total Aedes female mosquitos=
+	IF THEN ELSE(Aedes Adults>Aedes Carrying capacity, (Aedes Carrying capacity*Sex ratio after emergence\
+		*0.001), (Aedes Adults*Sex ratio after emergence))
+	~	Aedes
+	~	MAX ( (Aedes Adults*Sex ratio after emergence) , (1*Sex ratio after \
+		emergence) )
+	|
+
+Aedes egg formation rate=
+	Percentage of females laying eggs*Total Aedes female mosquitos*Oviposition rate
+	~	Aedes/Month
+	~		|
+
+Aedes mortality rate=
+	Aedes Adults*Aedes mortality
+	~	Aedes/Month
+	~		|
+
+Temp effect on Egg laying= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(35,10)],(20,4),(25,3),(30,2),(35,1.9) ))
+	~	Dmnl
+	~		|
+
+Oviposition rate=
+	Average monthly number of eggs per female*Aedes Breeding Site
+	~	1/Month
+	~		|
+
+Egg2Larval=
+	(RANDOM UNIFORM(0.46,0.6, 1000))
+	~	1/Month
+	~		|
+
+DenV Extrinsic Incubation period= WITH LOOKUP (
+	Regional Temperature*Temp effect,
+		([(0,0)-(40,40)],(0,0),(10,20),(15,15),(20,8),(22,5),(24,4),(28,2.8),(30,2.2),(35,5\
+		),(40,5) ))
+	~	Month
+	~		|
+
+Habitat Availability Index=(Sanitation index/(1+Land Use changes))*(Breeding site nature\
+		)
+	~	Dmnl
+	~		|
+
+Aedes Eggs= INTEG (Aedes egg formation rate-Aedes Larva dvpt rate-Ae Egg mortality rate\
+		,
+		0)
+	~	Aedes
+	~		|
+
+Deng Aedes Competence=(Number of bites per Aedes per month*Dengue Prefered climate)
+	~	Dmnl
+	~		|
+
+Optimal Rainfall Ae=
+	RANDOM UNIFORM(100, 150, 1000)
+	~	Dmnl
+	~		|
+
+Breeding site elimination rate=Aedes Breeding Site*Control Measures implemetation*Aedes Habitat Survival probability
+	~	1/Month
+	~		|
+
+Optimal Humidity Ae=
+	RANDOM UNIFORM( 72, 77, 1000)
+	~	Dmnl
+	~		|
+
+Climate effect impact Ae=
+	((Optimal Humidity Ae/Regional Humidity)+(Optimal Rainfall Ae/Regional Precipitation\
+		)+(Optimal temp Ae/Regional Temperature))/3
+	~	Dmnl
+	~		|
+
+Optimal temp Ae=
+	RANDOM UNIFORM(24, 26, 1000)
+	~	Dmnl
+	~		|
+
+Deng Vector to human contact=Dengue Infected Aedes region density*(Host Daytime exposure\
+		)
+	~	1/Month
+	~		|
+
+Emerging females=Total Aedes female mosquitos*females ready to bite
+	~	Aedes/Month
+	~		|
+
+Breeding site creation rate=(Aedes Region Suitability+Habitat Availability Index)*Availability of blood
+	~	1/Month
+	~		|
+
+Land Use changes=(Urbanization Index*Social networks impact)*Forest coverage
+	~	Dmnl
+	~		|
+
+Hatching rate at humidity 80= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(35,10)],(25,0.58),(30,0.7),(35,0.43) ))
+	~	Dmnl
+	~		|
+
+Percentage of females laying eggs=
+	IF THEN ELSE(Regional Humidity <60, "Percentage of females laying eggs at 60%", IF THEN ELSE\
+		(Regional Humidity>60:AND:Regional Humidity
+	<80, ("Percentage of females laying eggs at 60%"+(("Percentage of females laying eggs at 80%"\
+		-"Percentage of females laying eggs at 60%"
+	)/20)*(Regional Humidity-60)), "Percentage of females laying eggs at 80%"))
+	~	Dmnl
+	~		|
+
+Adjusting factor humidity hatching rate=
+	1
+	~	Dmnl
+	~		|
+
+Aedes Breeding Site= INTEG (
+	Breeding site creation rate-Breeding site elimination rate,
+		0.001)
+	~	Dmnl
+	~		|
+
+Aedes Climate development effect=IF THEN ELSE (Climate effect impact Ae>1:AND:Climate effect impact Ae\
+		<3 , 1 , 0 )
+	~	Dmnl
+	~		|
+
+Aedes siting in region=RANDOM UNIFORM(0, 0.5, 1000)
+	~	1/Month
+	~		|
+
+Aedes Carrying capacity maximum=
+	RANDOM UNIFORM(4500, 10000, 1000)
+	~	Aedes
+	~	Consider 10-45 mosquitos per household. A region of 1km2 can have more \
+		than 100 households.
+	|
+
+Forest coverage=RANDOM UNIFORM ( 0.003 ,0.4 , 1000 )
+	~	Dmnl
+	~		|
+
+Hatching rate=IF THEN ELSE(Regional Humidity<60, (Hatching rate at humidity 60*Adjusting factor humidity hatching rate\
+		), IF THEN ELSE(Regional Humidity>=60:AND:Regional Humidity<80, ((Hatching rate at humidity 60\
+		+(Hatching rate at humidity 80-Hatching rate at humidity 60))*(
+	Regional Humidity-60)/20)*Adjusting factor humidity hatching rate, (Hatching rate at humidity 80\
+		*Adjusting factor humidity hatching rate
+	)))
+	~	Dmnl
+	~	Adjusting factor humidity hatching rate*(IF THEN ELSE((Humidity<=70), \
+		Hatching rate at humidity 60, Hatching rate at humidity 80))
+	|
+
+Hatching rate at humidity 60= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(35,10)],(25,0.62),(30,0.58),(35,0.43) ))
+	~	Dmnl
+	~		|
+
+Rainfall threshold=
+	100
+	~	Dmnl
+	~		|
+
+Mean eggs at humidity 60= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(35,70)],(24,54),(27,62),(30,53),(35,54) ))
+	~	Dmnl
+	~		|
+
+Mean eggs at humidity 80= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(35,70)],(24,55),(27,64),(30,54),(35,54) ))
+	~	Dmnl
+	~		|
+
+Mean number of eggs laid per day=IF THEN ELSE(Regional Humidity<=60, Mean eggs at humidity 60\
+		, IF THEN ELSE(Regional Humidity>60:AND:Regional Humidity<80, (Mean eggs at humidity 60
+	+((Mean eggs at humidity 80-Mean eggs at humidity 60)/20)*(Regional Humidity-60)), Mean eggs at humidity 80\
+		))*Adjusting factor humidity mean egg
+	~	1/Month
+	~	(IF THEN ELSE((Humidity<=70), Mean eggs at humidity 60, Mean eggs at \
+		humidity 80))*Adjusting factor humidity mean egg
+	|
+
+Optimal Aedes VBD Climate effect=
+	Climate effect impact Ae
+	~	Dmnl
+	~		|
+
+"Percentage of females laying eggs at 60%"= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(35,10)],(10,0),(25,0.38),(30,0.684),(35,0.45) ))
+	~	Dmnl
+	~		|
+
+"Percentage of females laying eggs at 80%"= WITH LOOKUP (
+	Regional Temperature,
+		([(0,0)-(35,10)],(25,0.53),(30,0.74),(35,0.685) ))
+	~	Dmnl
+	~		|
+
+Regional Precipitation:INTERPOLATE::=GET XLS DATA('Mombasa Climate2015_2065.xlsx', 'Climate_monthly_ensemble'\
+		, 'C', 'E2')
+	~	Dmnl
+	~		|
+
+Regional Humidity:INTERPOLATE::=GET XLS DATA('Mombasa Climate2015_2065.xlsx', 'Climate_monthly_ensemble'\
+		, 'C', 'F2')
+	~	Dmnl
+	~		|
+
+Sex ratio after emergence=
+	0.5
+	~	Dmnl
+	~		|
+
+Regional Temperature:INTERPOLATE::=GET XLS DATA('Mombasa Climate2015_2065.xlsx', 'Climate_monthly_ensemble'\
+		, 'C', 'I2')
+	~	Dmnl
+	~		|
+
+Sanitation index= INTEG (waste accumulation rate-Waste removal rate,
+		0.1)
+	~	Dmnl
+	~		|
+
+Aedes Habitat Survival probability=0.907
+	~	1/Month
+	~		|
+
+Social networks impact=RANDOM UNIFORM ( 0.4 , 0.8 , 1000)
+	~	Dmnl
+	~		|
+
+FINAL TIME  = 599
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.25
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Aedes Life cycle
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Aedes Eggs,623,438,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Aedes Adults,1307,450,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Regional Temperature,563,1526,41,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,Regional Humidity,435,1536,57,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,5,Aedes Habitat Survival probability,1428,1357,61,26,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,6,Habitat Availability Index,1027,1392,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,7,Oviposition rate,437,529,50,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,8,Aedes mortality,1470,391,50,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,9,48,1485,452,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,10,12,9,4,0,0,22,0,0,0,-1--1--1,,1|(1441,452)|
+1,11,12,2,100,0,0,22,0,0,0,-1--1--1,,1|(1371,452)|
+11,12,0,1402,452,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,13,Aedes mortality rate,1402,476,50,16,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,14,48,447,442,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,15,17,1,4,0,0,22,0,0,0,-1--1--1,,1|(550,442)|
+1,16,17,14,100,0,0,22,0,0,0,-1--1--1,,1|(481,442)|
+11,17,0,511,442,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,18,Aedes egg formation rate,511,468,56,18,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,8,13,1,0,0,0,0,128,0,-1--1--1,,1|(1442,429)|
+10,20,Climate effect impact Ae,545,1439,44,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,21,Regional Precipitation,593,1326,40,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,22,Optimal temp Ae,416,1377,54,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,23,Optimal Humidity Ae,643,1467,41,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,24,Optimal Rainfall Ae,401,1445,53,17,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,25,22,20,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(498,1402)|
+1,26,3,20,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(549,1488)|
+1,27,24,20,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(473,1431)|
+1,28,21,20,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(569,1371)|
+1,29,4,20,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(477,1476)|
+1,30,23,20,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(598,1477)|
+1,31,7,18,1,0,0,0,0,128,0,-1--1--1,,1|(459,494)|
+1,32,2,13,1,0,0,0,0,128,0,-1--1--1,,1|(1350,408)|
+10,33,Social networks impact,1265,1501,63,16,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,34,Aedes Climate development effect,719,1382,60,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,35,Adjusting factor humidity hatching rate,674,569,69,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,36,Hatching rate at humidity 80,841,622,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,37,Hatching rate at humidity 60,905,576,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,38,Rainfall threshold,1377,610,54,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,39,Aedes Carrying capacity,1354,514,51,19,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,40,Mean number of eggs laid per day,559,705,69,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,41,Mean eggs at humidity 60,395,679,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,42,Mean eggs at humidity 80,391,741,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,43,Average monthly number of eggs per female,403,622,70,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,44,Sex ratio after emergence,644,614,45,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,45,Total Aedes female mosquitos,522,570,40,23,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,46,"Percentage of females laying eggs at 60%",224,449,70,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,47,"Percentage of females laying eggs at 80%",358,489,70,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,48,Aedes Carrying capacity maximum,1487,576,60,26,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,49,Percentage of females laying eggs,400,401,60,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,50,Hatching rate,793,511,42,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,51,Egg2Larval,718,315,52,26,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,52,35,50,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,53,36,50,1,0,0,0,0,128,0,-1--1--1,,1|(822,564)|
+1,54,37,50,1,0,0,0,0,128,0,-1--1--1,,1|(842,534)|
+1,55,41,40,1,0,0,0,0,128,0,-1--1--1,,1|(476,677)|
+1,56,40,43,1,0,0,0,0,128,0,-1--1--1,,1|(496,657)|
+1,57,42,40,1,0,0,0,0,128,0,-1--1--1,,1|(477,727)|
+1,58,46,49,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,59,47,49,1,0,0,0,0,128,0,-1--1--1,,1|(387,446)|
+1,60,48,39,1,0,0,0,0,128,0,-1--1--1,,1|(1421,552)|
+1,61,38,39,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(1353,569)|
+1,62,51,145,1,0,0,0,0,128,0,-1--1--1,,1|(745,389)|
+10,63,Regional Temperature,1015,653,47,18,3,130,0,1,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,64,Regional Humidity,725,679,34,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,65,63,36,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,66,64,50,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(772,608)|
+1,67,63,37,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(979,604)|
+10,68,Regional Temperature,204,582,45,17,3,130,0,1,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,69,68,41,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(297,621)|
+1,70,68,42,0,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(0,0)|
+1,71,68,46,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(212,522)|
+1,72,68,47,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(261,512)|
+10,73,Regional Humidity,235,372,40,20,3,2,0,1,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,74,73,49,0,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(0,0)|
+10,75,Temp effect on Egg laying,342,553,61,19,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,76,75,43,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,77,Aedes Adults,561,505,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,78,49,18,1,0,0,0,0,128,0,-1--1--1,,1|(443,413)|
+1,79,64,40,0,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(0,0)|
+10,80,Aedes Breeding Site,1175,1284,54,16,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,81,48,972,1293,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,82,84,80,4,0,0,22,0,0,0,-1--1--1,,1|(1088,1293)|
+1,83,84,81,100,0,0,22,0,0,0,-1--1--1,,1|(1013,1293)|
+11,84,0,1050,1293,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,85,Breeding site creation rate,1050,1320,42,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,86,48,1412,1284,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,87,89,86,4,0,0,22,0,0,0,-1--1--1,,1|(1359,1284)|
+1,88,89,80,100,0,0,22,0,0,0,-1--1--1,,1|(1267,1284)|
+11,89,0,1311,1284,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,90,Breeding site elimination rate,1311,1311,48,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,91,6,85,1,0,0,0,0,128,0,-1--1--1,,1|(1044,1361)|
+1,92,5,90,1,0,0,0,0,128,0,-1--1--1,,1|(1384,1317)|
+1,93,80,90,1,0,0,0,0,128,0,-1--1--1,,1|(1224,1317)|
+10,94,Aedes Region Suitability,903,1373,40,20,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,95,94,85,1,0,0,0,0,128,0,-1--1--1,,1|(962,1331)|
+10,96,Aedes siting in region,768,1436,46,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,97,96,109,1,0,0,0,0,128,0,-1--1--1,,1|(845,1424)|
+10,98,Land Use changes,1195,1405,58,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,99,Forest coverage,1369,1475,51,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,100,99,98,1,0,0,0,0,128,0,-1--1--1,,1|(1263,1452)|
+1,101,33,98,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,102,Optimal Aedes VBD Climate effect,468,1310,63,26,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,103,20,102,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(515,1378)|
+10,104,Sanitation index,1179,1355,65,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,105,104,6,1,0,0,0,0,128,0,-1--1--1,,1|(1092,1360)|
+1,106,98,6,1,0,0,0,0,128,0,-1--1--1,,1|(1160,1398)|
+1,107,77,45,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,108,44,45,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,109,Availability of blood,934,1429,44,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,110,Human Population,657,1558,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,111,Livestock Population,729,1609,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,112,110,118,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,113,111,119,1,0,0,0,0,128,0,-1--1--1,,1|(758,1570)|
+1,114,109,85,1,0,0,0,0,128,0,-1--1--1,,1|(991,1379)|
+1,115,43,7,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,116,45,18,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,117,68,75,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(278,558)|
+10,118,Human Blood Preference,748,1478,45,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,119,Livestock blood preference,799,1527,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,120,Breeding site nature,1159,1449,42,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,121,Breeding habitat characteristics preference,959,1486,81,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,122,121,120,1,0,0,0,0,128,0,-1--1--1,,1|(1050,1454)|
+1,123,120,6,1,0,0,0,0,128,0,-1--1--1,,1|(1119,1415)|
+10,124,Urbanization Index,1349,1438,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,125,124,98,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,126,118,109,1,0,0,0,0,128,0,-1--1--1,,1|(841,1466)|
+1,127,119,109,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,128,Breeding site rain,717,1336,54,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,129,21,128,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,130,Control Measures implemetation,1313,1382,58,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,131,130,90,1,0,0,0,0,128,0,-1--1--1,,1|(1308,1347)|
+1,132,128,94,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,133,20,34,1,0,0,0,1,192,0,255-0-0,|||0-0-0,1|(620,1403)|
+1,134,96,94,1,0,0,0,0,192,0,-1--1--1,,1|(835,1394)|
+1,135,34,94,1,0,0,0,0,192,0,-1--1--1,,1|(813,1368)|
+10,136,Natural breeding site,1079,1513,58,17,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,137,Artificial breeding site,1176,1518,47,14,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,138,136,120,1,0,0,0,0,192,0,-1--1--1,,1|(1097,1486)|
+1,139,137,120,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,140,Aedes Larva,820,438,44,20,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,141,Aedes Pupa,1082,443,43,24,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,142,144,1,100,0,0,22,0,192,0,-1--1--1,,1|(685,441)|
+1,143,144,140,4,0,0,22,0,192,0,-1--1--1,,1|(747,441)|
+11,144,0,713,441,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,145,Aedes Larva dvpt rate,713,466,50,17,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,146,148,140,100,0,0,22,0,192,0,-1--1--1,,1|(904,444)|
+1,147,148,141,4,0,0,22,0,192,0,-1--1--1,,1|(997,444)|
+11,148,0,950,444,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,149,Aedes Pupa dvpt rate,950,469,68,17,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,150,152,141,100,0,0,22,0,192,0,-1--1--1,,1|(1154,439)|
+1,151,152,2,4,0,0,22,0,192,0,-1--1--1,,1|(1231,439)|
+11,152,0,1189,439,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,153,Aedes Adults dvpt rate,1189,462,51,15,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,154,48,822,326,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,155,157,140,100,0,0,22,0,192,0,-1--1--1,,1|(822,395)|
+1,156,157,154,4,0,0,22,0,192,0,-1--1--1,,1|(822,347)|
+11,157,0,822,367,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,158,Ae larva mortality rate,882,367,52,17,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,159,48,1085,311,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,160,162,141,100,0,0,22,0,192,0,-1--1--1,,1|(1085,392)|
+1,161,162,159,4,0,0,22,0,192,0,-1--1--1,,1|(1085,336)|
+11,162,0,1085,360,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,163,Ae pupa mortality rate,1142,360,49,20,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,164,Larva mortality probability,908,323,48,24,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,165,Egg mortality probability,523,309,42,17,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,166,Pupa mortality probability,1255,330,46,18,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,167,50,145,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+12,168,48,623,321,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,169,171,1,100,0,0,22,0,192,0,-1--1--1,,1|(623,396)|
+1,170,171,168,4,0,0,22,0,192,0,-1--1--1,,1|(623,345)|
+11,171,0,623,368,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,172,Ae Egg mortality rate,681,368,50,17,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,173,1,171,1,0,0,0,0,192,0,-1--1--1,,1|(578,388)|
+1,174,165,171,1,0,0,0,0,192,0,-1--1--1,,1|(556,342)|
+1,175,1,145,1,0,0,0,0,192,0,-1--1--1,,1|(669,406)|
+1,176,140,157,1,0,0,0,0,192,0,-1--1--1,,1|(786,387)|
+1,177,164,157,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,178,140,149,1,0,0,0,0,192,0,-1--1--1,,1|(890,400)|
+1,179,141,162,1,0,0,0,0,192,0,-1--1--1,,1|(1027,370)|
+1,180,166,163,1,0,0,0,0,192,0,-1--1--1,,1|(1158,355)|
+1,181,141,153,1,0,0,0,0,192,0,-1--1--1,,1|(1129,404)|
+10,182,Larval2pupa,988,368,55,26,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,183,Pupa2Adult time,1230,535,53,26,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,184,Climate effect on larva,1009,532,46,18,3,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,185,Climate effect on pupa,1117,553,44,14,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,186,182,149,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,187,184,149,1,0,0,0,1,192,0,255-0-0,|||0-0-0,1|(935,511)|
+1,188,185,153,0,0,0,0,1,192,0,255-0-0,|||0-0-0,1|(0,0)|
+1,189,183,153,1,0,0,0,0,192,0,-1--1--1,,1|(1208,500)|
+10,190,Regional Precipitation,1137,1586,45,22,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,191,Optimal Rainfall Ae,1032,1574,46,16,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,192,191,137,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,193,190,137,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,194,63,184,0,0,0,0,3,128,0,255-0-0,|||0-0-0,1|(0,0)|
+1,195,63,185,0,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(0,0)|
+10,196,Regional Precipitation,1254,614,40,20,3,2,0,1,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,197,196,39,1,0,0,0,1,128,0,255-0-0,|||0-0-0,1|(1283,564)|
+10,198,TIME STEP,552,636,50,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,199,198,43,1,0,0,0,0,128,0,-1--1--1,,1|(478,618)|
+10,200,Aedes Carrying capacity,644,500,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,201,200,45,1,0,0,0,0,128,0,-1--1--1,,1|(594,532)|
+10,202,Aedes Suitability Index,836,1307,54,16,3,131,0,4,0,0,0,0,-1--1--1,255-0-0,|||255-0-0,0,0,0,0,0,0
+1,203,202,94,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,204,80,7,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,205,Adjusting factor humidity mean egg,559,743,64,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,206,205,40,0,1,0,0,0,64,0,-1--1--1,,1|(0,0)|
+10,207,Aedes Suitability Index,1507,517,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,208,207,39,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,209,Aedes Adults,366,303,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,210,Aedes Carrying capacity,423,353,55,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,211,209,165,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,212,210,165,1,0,0,0,0,128,0,-1--1--1,,1|(482,345)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Vector SEI
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Susceptible Female Aedes Adults,323,359,72,36,3,131,0,24,0,0,0,0,-1--1--1,255-0-255,|18|B|0-0-0,0,0,0,0,0,0
+10,2,DengV Exposed Aedes Adults,669,145,78,35,3,131,0,24,0,0,0,0,-1--1--1,64-160-98,|18|B|0-0-0,0,0,0,0,0,0
+10,3,DengV Infected Aedes Adults,1051,145,82,31,3,131,0,24,0,0,0,0,-1--1--1,64-160-98,|18|B|0-0-0,0,0,0,0,0,0
+1,4,6,3,4,0,0,22,0,0,0,-1--1--1,,1|(887,130)|
+1,5,6,2,100,0,0,22,0,0,0,-1--1--1,,1|(768,130)|
+11,6,0,797,130,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,7,Aedes Deng infectious rate,849,130,44,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,8,48,1027,-5,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,9,11,8,4,0,0,22,0,0,0,-1--1--1,,1|(1024,20)|
+1,10,11,3,100,0,0,22,0,0,0,-1--1--1,,1|(1024,84)|
+11,11,0,1024,46,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,12,DenV induced Mortality rate,1024,80,46,26,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,13,48,703,14,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,16,13,4,0,0,22,0,0,0,-1--1--1,,1|(700,44)|
+1,15,16,2,100,0,0,22,0,0,0,-1--1--1,,1|(700,96)|
+11,16,0,700,75,6,8,34,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,17,DenV Exposed mortality rate,757,75,51,19,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,18,48,167,129,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,21,18,4,0,0,22,0,0,0,-1--1--1,,1|(204,129)|
+1,20,21,1,100,0,0,22,0,0,0,-1--1--1,,1|(323,129)|
+11,21,0,237,129,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,22,Aedes S mortality rate,237,156,42,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,23,1,21,1,0,0,0,0,128,0,-1--1--1,,1|(270,206)|
+1,24,1,46,1,0,0,0,0,128,0,-1--1--1,,1|(369,248)|
+1,25,2,17,1,0,0,0,0,128,0,-1--1--1,,1|(670,64)|
+1,26,2,7,1,0,0,0,0,128,0,-1--1--1,,1|(773,157)|
+1,27,3,12,1,0,0,0,0,128,0,-1--1--1,,1|(958,103)|
+10,28,DengV Infected Aedes Adults,1324,47,56,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,29,DenV Extrinsic Incubation period,891,66,55,23,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,30,29,7,1,0,0,0,0,128,0,-1--1--1,,1|(867,94)|
+10,31,Aedes Female Susceptible mortality factor,137,219,55,24,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,32,31,22,1,0,0,0,0,128,0,-1--1--1,,1|(161,152)|
+10,33,DenV Vector Infected deaths,1115,22,52,17,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,34,DenV Vector Exposed deaths,791,10,51,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,35,34,17,1,0,0,0,0,128,0,-1--1--1,,1|(828,45)|
+1,36,33,12,1,0,0,0,0,128,0,-1--1--1,,1|(1047,21)|
+10,37,Probability of infected dengue vector from biting infected human,184,55,69,30,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,38,Deng Vector to human contact,1387,-108,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,39,38,59,1,0,0,0,0,128,0,-1--1--1,,1|(1445,-109)|
+12,40,48,81,343,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,41,43,1,4,0,0,22,0,0,0,-1--1--1,,1|(209,345)|
+1,42,43,40,100,0,0,22,0,0,0,-1--1--1,,1|(123,345)|
+11,43,0,162,345,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,44,Emerging females,162,364,55,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,45,Factor Adjusting exposition,381,178,55,22,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,46,Aedes ready to bite humans,394,246,49,16,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,47,45,46,1,0,0,0,0,128,0,-1--1--1,,1|(385,218)|
+10,48,Number of bites per Aedes per month,422,92,65,19,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,49,Regional Temperature,870,-17,49,18,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,50,49,29,1,0,0,0,0,128,0,-1--1--1,,1|(894,-1)|
+10,51,DenV Incidence,521,42,48,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,52,Total Aedes female mosquitos,140,282,62,15,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,53,52,44,1,0,0,0,0,128,0,-1--1--1,,1|(142,321)|
+10,54,Risk of Dengue Infection,1645,-47,53,16,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,55,48,1436,-46,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,56,58,54,4,0,0,22,0,0,0,-1--1--1,,1|(1552,-46)|
+1,57,58,55,100,0,0,22,0,0,0,-1--1--1,,1|(1473,-46)|
+11,58,0,1506,-46,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,59,Deng Human contact infection rate,1506,-16,60,22,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,60,Deng Aedes Competence,1709,12,62,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,61,Optimal Aedes VBD Climate effect,1580,22,70,18,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,62,61,84,1,0,0,0,0,128,0,-1--1--1,,1|(1590,58)|
+10,63,Number of bites per Aedes per month,1884,25,69,19,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,64,63,60,1,0,0,0,0,128,0,-1--1--1,,1|(1805,29)|
+10,65,Human Population,590,86,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,66,65,51,1,0,0,0,0,128,0,-1--1--1,,1|(556,77)|
+1,67,37,51,1,0,0,0,0,128,0,-1--1--1,,1|(443,14)|
+10,68,Host Daytime exposure,1244,-95,44,15,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,69,Dengue Infected Aedes region density,1354,-22,67,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,70,68,38,1,0,0,0,0,128,0,-1--1--1,,1|(1314,-125)|
+1,71,69,38,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,72,28,69,1,0,0,0,0,128,0,-1--1--1,,1|(1339,19)|
+10,73,Aedes Adults,1205,-32,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,74,73,69,1,0,0,0,0,128,0,-1--1--1,,1|(1267,-35)|
+10,75,females ready to bite,233,258,49,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,76,75,44,1,0,0,0,0,128,0,-1--1--1,,1|(212,306)|
+12,77,48,1847,-54,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,78,80,77,4,0,0,22,0,0,0,-1--1--1,,1|(1805,-54)|
+1,79,80,54,100,0,0,22,0,0,0,-1--1--1,,1|(1729,-54)|
+11,80,0,1767,-54,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,81,Dengue prevention rate,1767,-27,48,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,82,Aedes Control measures,1843,-119,60,17,8,130,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,83,54,81,1,0,0,0,0,128,0,-1--1--1,,1|(1693,-86)|
+10,84,Dengue Prefered climate,1658,80,53,17,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,85,Dengue Temp,1582,118,45,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,86,Deng Rainfall,1860,68,42,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,87,Deng Humidity,1753,71,47,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,88,Regional Humidity,1878,117,34,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,89,Regional Precipitation,1876,162,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,90,Regional Temperature,1580,144,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,91,Dengue Climate factor,1725,149,51,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,92,85,91,1,0,0,0,0,128,0,-1--1--1,,1|(1648,140)|
+1,93,90,91,1,0,0,0,0,128,0,-1--1--1,,1|(1644,176)|
+1,94,86,91,1,0,0,0,0,128,0,-1--1--1,,1|(1807,113)|
+1,95,89,91,1,0,0,0,0,128,0,-1--1--1,,1|(1800,176)|
+1,96,87,91,1,0,0,0,0,128,0,-1--1--1,,1|(1750,105)|
+1,97,88,91,1,0,0,0,0,128,0,-1--1--1,,1|(1803,137)|
+1,98,91,84,1,0,0,0,0,128,0,-1--1--1,,1|(1709,113)|
+1,99,84,60,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,100,Region Initial Dengue incidence,620,19,57,17,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,101,100,51,1,0,0,0,0,192,0,-1--1--1,,1|(569,46)|
+10,102,Chiku Vector to human contact,1416,245,51,20,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,103,102,109,1,0,0,0,0,128,0,-1--1--1,,1|(1444,275)|
+10,104,Risk of Chikungunya Infection,1616,304,66,22,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,105,48,1393,292,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,106,108,104,4,0,0,22,0,0,0,-1--1--1,,1|(1516,290)|
+1,107,108,105,100,0,0,22,0,0,0,-1--1--1,,1|(1437,290)|
+11,108,0,1477,290,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,109,Chik Human contact infection rate,1477,318,57,20,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,110,Aedes Chiku Competence,1637,354,54,15,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,111,Optimal Aedes VBD Climate effect,1528,378,51,22,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,112,111,125,1,0,0,0,0,128,0,-1--1--1,,1|(1552,413)|
+10,113,Number of bites per Aedes per month,1809,363,69,19,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,114,113,110,1,0,0,0,0,128,0,-1--1--1,,1|(1737,373)|
+10,115,Chikungunya Infected Aedes region density,1321,287,67,22,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,116,115,102,1,0,0,0,0,128,0,-1--1--1,,1|(1332,253)|
+10,117,Aedes Adults,1267,236,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,118,117,115,1,0,0,0,0,128,0,-1--1--1,,1|(1285,255)|
+12,119,48,1845,300,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,120,122,119,4,0,0,22,0,0,0,-1--1--1,,1|(1791,299)|
+1,121,122,104,100,0,0,22,0,0,0,-1--1--1,,1|(1708,299)|
+11,122,0,1741,299,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,123,Chiku prevention rate,1741,322,50,15,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,124,104,123,1,0,0,0,0,128,0,-1--1--1,,1|(1661,256)|
+10,125,Chikungunya Prefered climate,1614,445,51,22,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,126,Chiku Temp,1550,477,42,17,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,127,Chiku Rainfall,1848,448,44,8,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,128,Chiku Humidity,1756,416,49,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,129,Regional Humidity,1861,498,34,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,130,Regional Precipitation,1783,554,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,131,Regional Temperature,1636,550,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,132,Chikungunya Climate factor,1729,483,57,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,133,126,132,1,0,0,0,0,128,0,-1--1--1,,1|(1633,492)|
+1,134,131,132,1,0,0,0,0,128,0,-1--1--1,,1|(1694,537)|
+1,135,127,132,1,0,0,0,0,128,0,-1--1--1,,1|(1801,474)|
+1,136,130,132,1,0,0,0,0,128,0,-1--1--1,,1|(1728,525)|
+1,137,128,132,1,0,0,0,0,128,0,-1--1--1,,1|(1761,438)|
+1,138,129,132,1,0,0,0,0,128,0,-1--1--1,,1|(1795,497)|
+1,139,132,125,1,0,0,0,0,128,0,-1--1--1,,1|(1692,451)|
+1,140,125,110,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,141,Yellow Fever Vector to human contact,1419,562,65,26,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,142,141,148,1,0,0,0,0,128,0,-1--1--1,,1|(1502,564)|
+10,143,Risk of Yellow Fever Infection,1640,608,65,21,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,144,48,1432,614,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,145,147,143,4,0,0,22,0,0,0,-1--1--1,,1|(1548,614)|
+1,146,147,144,100,0,0,22,0,0,0,-1--1--1,,1|(1475,614)|
+11,147,0,1515,614,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,148,YF Human contact infection rate,1515,641,67,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,149,YF Aedes Competence,1730,677,62,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,150,Optimal Aedes VBD Climate effect,1779,730,69,21,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,151,150,165,1,0,0,0,0,128,0,-1--1--1,,1|(1663,715)|
+10,152,Number of bites per Aedes per month,1885,672,69,19,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,153,152,149,1,0,0,0,0,128,0,-1--1--1,,1|(1818,683)|
+10,154,Yellow Fever Infected Aedes region density,1438,459,68,25,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,155,154,141,1,0,0,0,0,128,0,-1--1--1,,1|(1441,502)|
+10,156,Aedes Adults,1413,392,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,157,156,154,1,0,0,0,0,128,0,-1--1--1,,1|(1467,414)|
+12,158,48,1843,605,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,159,161,158,4,0,0,22,0,0,0,-1--1--1,,1|(1803,605)|
+1,160,161,143,100,0,0,22,0,0,0,-1--1--1,,1|(1733,605)|
+11,161,0,1768,605,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,162,YF prevention rate,1768,629,53,16,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,163,Aedes Control measures,1938,623,53,20,8,130,0,3,0,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,164,143,162,1,0,0,0,0,128,0,-1--1--1,,1|(1692,569)|
+10,165,YF Prefered climate,1610,691,45,15,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,166,YF Temp,1625,754,35,18,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,167,YF Rainfall,1342,776,34,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,168,YF Humidity,1545,783,47,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,169,Regional Humidity,1327,728,34,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,170,Regional Precipitation,1442,783,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,171,Regional Temperature,1356,673,46,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,172,Yellow Fever Climate factor,1481,716,51,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,173,166,172,1,0,0,0,0,128,0,-1--1--1,,1|(1560,729)|
+1,174,171,172,1,0,0,0,0,128,0,-1--1--1,,1|(1429,673)|
+1,175,167,172,1,0,0,0,0,128,0,-1--1--1,,1|(1398,741)|
+1,176,170,172,1,0,0,0,0,128,0,-1--1--1,,1|(1460,746)|
+1,177,168,172,1,0,0,0,0,128,0,-1--1--1,,1|(1500,743)|
+1,178,169,172,1,0,0,0,0,128,0,-1--1--1,,1|(1417,702)|
+1,179,172,165,1,0,0,0,0,128,0,-1--1--1,,1|(1548,707)|
+1,180,165,149,1,0,0,0,0,128,0,-1--1--1,,1|(1656,669)|
+10,181,ChikuV Exposed Aedes Adults,693,362,75,37,3,131,0,24,0,0,0,0,-1--1--1,255-128-0,|18|B|0-0-0,0,0,0,0,0,0
+10,182,ChikuV Infected Aedes Adults,980,351,77,33,3,131,0,24,0,0,0,0,-1--1--1,255-128-0,|18|B|0-0-0,0,0,0,0,0,0
+1,183,185,182,4,0,0,22,0,0,0,-1--1--1,,1|(868,357)|
+1,184,185,181,100,0,0,22,0,0,0,-1--1--1,,1|(792,357)|
+11,185,0,825,357,8,6,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,186,Aedes ChikV infectious rate,825,388,45,25,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,187,48,919,197,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,188,190,187,4,0,0,22,0,0,0,-1--1--1,,1|(919,226)|
+1,189,190,182,100,0,0,22,0,0,0,-1--1--1,,1|(919,290)|
+11,190,0,919,255,6,8,34,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,191,ChikV induced Mortality rate,973,255,48,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,192,181,186,1,0,0,0,0,128,0,-1--1--1,,1|(782,300)|
+1,193,182,191,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,194,ChikV Extrinsic Incubation period,914,451,58,22,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,195,194,186,1,0,0,0,0,128,0,-1--1--1,,1|(873,423)|
+10,196,ChikV Vector Infected deaths,1070,205,51,20,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,197,ChikV Vector Exposed deaths,810,227,51,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,198,196,191,1,0,0,0,0,128,0,-1--1--1,,1|(1000,200)|
+10,199,Probability of vector ChikV infection from biting infected human,526,218,79,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,200,Regional Temperature,773,473,50,20,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,201,200,194,1,0,0,0,0,128,0,-1--1--1,,1|(826,458)|
+10,202,ChikV Incidence,556,306,42,18,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,203,199,202,1,0,0,0,0,128,0,-1--1--1,,1|(555,231)|
+10,204,Region Initial ChikV incidence,675,201,57,19,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,205,204,202,1,0,0,0,0,192,0,-1--1--1,,1|(619,242)|
+10,206,YFV Exposed Aedes Adults,595,554,70,34,3,131,0,24,0,0,0,0,-1--1--1,0-255-255,|18|B|0-0-0,0,0,0,0,0,0
+10,207,YFV Infected Aedes Adults,867,553,75,28,3,131,0,24,0,0,0,0,-1--1--1,0-255-255,|18|B|0-0-0,0,0,0,0,0,0
+1,208,210,207,4,0,0,22,0,0,0,-1--1--1,,1|(755,540)|
+1,209,210,206,100,0,0,22,0,0,0,-1--1--1,,1|(684,540)|
+11,210,0,711,540,8,6,33,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,211,Aedes YF infectious rate,711,561,57,15,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,212,48,1095,549,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,213,215,212,4,0,0,22,0,0,0,-1--1--1,,1|(1023,544)|
+1,214,215,207,100,0,0,22,0,0,0,-1--1--1,,1|(945,544)|
+11,215,0,955,544,6,8,34,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,216,YF induced Mortality rate,1017,544,56,22,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,217,206,211,1,0,0,0,0,128,0,-1--1--1,,1|(655,513)|
+1,218,207,216,1,0,0,0,0,128,0,-1--1--1,,1|(922,510)|
+10,219,YFV Extrinsic Incubation period,682,637,62,24,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,220,219,211,1,0,0,0,0,128,0,-1--1--1,,1|(689,585)|
+10,221,YFV Vector Infected deaths,1098,483,49,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,222,YFV Vector Exposed deaths,524,627,62,17,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,223,221,216,1,0,0,0,0,128,0,-1--1--1,,1|(1019,485)|
+10,224,Probability of vector YF infection from biting infected human,170,490,68,24,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,225,Regional Temperature,852,624,48,15,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,226,225,219,1,0,0,0,0,128,0,-1--1--1,,1|(780,606)|
+10,227,YF Incidence,315,549,39,14,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,228,Human Population,271,611,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,229,228,227,1,0,0,0,0,128,0,-1--1--1,,1|(292,571)|
+1,230,224,227,1,0,0,0,0,128,0,-1--1--1,,1|(242,523)|
+10,231,Region Initial Yellow fever incidence,387,615,65,22,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,232,231,227,1,0,0,0,0,192,0,-1--1--1,,1|(374,576)|
+10,233,Host Daytime exposure,1305,495,51,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,234,Host Daytime exposure,1352,195,50,15,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,235,234,102,1,0,0,0,0,192,0,-1--1--1,,1|(1373,205)|
+1,236,233,141,1,0,0,0,0,192,0,-1--1--1,,1|(1373,513)|
+10,237,Aedes ready to bite humans,229,411,55,14,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,238,Number of bites per Aedes per month,436,419,69,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+12,239,48,368,544,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,240,242,206,100,0,0,22,0,192,0,-1--1--1,,1|(482,547)|
+1,241,242,239,4,0,0,22,0,192,0,-1--1--1,,1|(400,547)|
+11,242,0,431,547,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,243,YF Exposed mortality rate,480,547,41,22,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,244,206,243,1,0,0,0,0,192,0,-1--1--1,,1|(474,516)|
+1,245,222,243,1,0,0,0,0,192,0,-1--1--1,,1|(516,606)|
+12,246,48,670,224,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,247,249,181,100,0,0,22,0,192,0,-1--1--1,,1|(671,307)|
+1,248,249,246,4,0,0,22,0,192,0,-1--1--1,,1|(671,254)|
+11,249,0,671,283,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,250,ChikV Exposed mortality rate,729,283,50,26,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,251,197,250,1,0,0,0,0,192,0,-1--1--1,,1|(816,262)|
+1,252,181,250,1,0,0,0,0,192,0,-1--1--1,,1|(709,323)|
+10,253,Chikungunya Infected HP,680,436,67,19,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,254,YellowFever Infected HP,184,565,65,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,255,254,227,1,0,0,0,0,192,0,-1--1--1,,1|(243,564)|
+1,256,253,202,1,0,0,0,0,192,0,-1--1--1,,1|(591,395)|
+10,257,Dengue Infected HP,343,44,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,258,257,51,1,0,0,0,0,64,0,-1--1--1,,1|(418,61)|
+10,259,Host Socioeconomic Risk,1474,82,50,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,260,Host Socioeconomic Risk,1562,239,64,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,261,Host Socioeconomic Risk,1537,514,59,26,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,262,260,109,1,0,0,0,0,192,0,-1--1--1,,1|(1516,264)|
+1,263,261,148,1,0,0,0,0,192,0,-1--1--1,,1|(1540,572)|
+1,264,259,59,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,265,Control measures frequency Aedes,1821,241,56,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,266,265,123,1,0,0,0,0,128,0,-1--1--1,,1|(1759,275)|
+10,267,Control measures frequency Aedes,1909,557,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,268,Control measures frequency Aedes,1697,-115,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,269,268,81,1,0,0,0,0,128,0,-1--1--1,,1|(1754,-85)|
+1,270,267,162,1,0,0,0,0,128,0,-1--1--1,,1|(1842,579)|
+10,271,Temp effect,971,7,39,13,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,272,271,29,1,0,0,0,0,192,0,-1--1--1,,1|(945,41)|
+10,273,Temp effect,1109,386,49,14,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,274,Temp effect,960,604,49,14,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,275,274,219,1,0,0,0,0,192,0,-1--1--1,,1|(774,589)|
+1,276,273,194,1,0,0,0,0,192,0,-1--1--1,,1|(1040,428)|
+1,277,279,1,100,0,0,22,0,192,0,-1--1--1,,1|(323,134)|
+1,278,279,2,4,0,0,22,0,192,0,-1--1--1,,1|(548,134)|
+11,279,0,499,134,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,280,Dengue exposition rate,499,158,53,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,281,283,1,100,0,0,22,0,192,0,-1--1--1,,1|(410,348)|
+1,282,283,181,4,0,0,22,0,192,0,-1--1--1,,1|(530,348)|
+11,283,0,434,348,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,284,ChikV exposition rate,496,348,54,26,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,285,287,1,100,0,0,22,0,192,0,-1--1--1,,1|(319,416)|
+1,286,287,206,4,0,0,22,0,192,0,-1--1--1,,1|(595,444)|
+11,287,0,319,444,8,6,33,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,288,YF exposition rate,319,468,59,18,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,289,46,284,1,0,0,0,0,192,0,-1--1--1,,1|(418,286)|
+1,290,238,284,1,0,0,0,0,192,0,-1--1--1,,1|(446,410)|
+1,291,202,284,1,0,0,0,0,192,0,-1--1--1,,1|(537,293)|
+1,292,237,288,1,0,0,0,0,192,0,-1--1--1,,1|(298,430)|
+1,293,227,288,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,294,46,280,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,295,48,280,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,296,51,280,1,0,0,0,0,192,0,-1--1--1,,1|(489,105)|
+10,297,ChikuV Infected Aedes Adults,1323,349,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,298,297,115,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,299,YFV Infected Aedes Adults,1271,434,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,300,299,154,1,0,0,0,0,128,0,-1--1--1,,1|(1336,424)|
+1,301,65,202,1,0,0,0,0,128,0,-1--1--1,,1|(599,219)|
+1,302,238,288,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Human Demographics view
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,99,0
+10,1,Human Population,673,49,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,2,48,509,37,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,3,5,1,4,0,0,22,0,0,0,-1--1--1,,1|(603,37)|
+1,4,5,2,100,0,0,22,0,0,0,-1--1--1,,1|(540,37)|
+11,5,0,568,37,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Human birth rate,568,56,53,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,7,48,895,40,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,8,10,7,4,0,0,22,0,0,0,-1--1--1,,1|(837,40)|
+1,9,10,1,100,0,0,22,0,0,0,-1--1--1,,1|(745,40)|
+11,10,0,784,40,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,11,Human Death rate,784,59,57,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,12,48,680,-59,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,13,15,1,4,0,0,22,0,0,0,-1--1--1,,1|(680,5)|
+1,14,15,12,100,0,0,22,0,0,0,-1--1--1,,1|(680,-40)|
+11,15,0,680,-24,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,16,Human imigration rate,740,-24,52,14,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,17,1,6,1,0,0,0,0,128,0,-1--1--1,,1|(595,24)|
+1,18,1,11,1,0,0,0,0,128,0,-1--1--1,,1|(731,86)|
+1,19,1,16,1,0,0,0,0,128,0,-1--1--1,,1|(703,21)|
+10,20,Human births,642,111,42,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,21,Human lifespan,873,-15,48,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,22,20,6,1,0,0,0,0,128,0,-1--1--1,,1|(590,91)|
+1,23,21,11,1,0,0,0,0,128,0,-1--1--1,,1|(796,11)|
+10,24,Informal settlements Population,420,304,63,14,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,25,Labor Force,1166,-67,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,26,Treatment Measures Index,1383,99,41,23,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,27,48,1351,-69,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,28,30,27,4,0,0,22,0,0,0,-1--1--1,,1|(1305,-69)|
+1,29,30,25,100,0,0,22,0,0,0,-1--1--1,,1|(1231,-69)|
+11,30,0,1263,-69,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,31,Workforce loss rate,1263,-48,40,13,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,32,48,1004,-59,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,33,35,25,4,0,0,22,0,0,0,-1--1--1,,1|(1101,-59)|
+1,34,35,32,100,0,0,22,0,0,0,-1--1--1,,1|(1039,-59)|
+11,35,0,1070,-59,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,36,Workforce growth rate,1070,-32,37,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,37,Human Population,242,241,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,38,Human Population,1149,-126,44,16,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,39,38,111,1,0,0,0,0,128,0,-1--1--1,,1|(1089,-133)|
+10,40,Productivity loss,1274,-128,52,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,41,40,31,1,0,0,0,0,128,0,-1--1--1,,1|(1234,-101)|
+10,42,Region urban growth,672,434,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,43,Social networks impact,857,371,55,14,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,44,43,94,1,0,0,0,0,128,0,-1--1--1,,1|(839,400)|
+10,45,infrastructure development index,913,327,60,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,46,Sanitation index,463,692,61,16,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,47,48,261,703,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,48,50,46,4,0,0,22,0,0,0,-1--1--1,,1|(373,703)|
+1,49,50,47,100,0,0,22,0,0,0,-1--1--1,,1|(302,703)|
+11,50,0,339,703,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,51,waste accumulation rate,339,730,56,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,52,48,651,692,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,53,55,52,4,0,0,22,0,0,0,-1--1--1,,1|(609,692)|
+1,54,55,46,100,0,0,22,0,0,0,-1--1--1,,1|(545,692)|
+11,55,0,572,692,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,56,Waste removal rate,572,716,43,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,57,Waste accumulation,366,802,42,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,58,Drainage coverage,506,772,59,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,59,57,51,1,0,0,0,0,128,0,-1--1--1,,1|(361,762)|
+1,60,58,56,1,0,0,0,0,128,0,-1--1--1,,1|(508,743)|
+12,61,48,1211,95,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,62,64,26,4,0,0,22,0,0,0,-1--1--1,,1|(1309,95)|
+1,63,64,61,100,0,0,22,0,0,0,-1--1--1,,1|(1242,95)|
+11,64,0,1270,95,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,65,Healthcare availability rate,1270,122,47,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,66,48,1538,97,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,67,69,66,4,0,0,22,0,0,0,-1--1--1,,1|(1503,97)|
+1,68,69,26,100,0,0,22,0,0,0,-1--1--1,,1|(1445,97)|
+11,69,0,1473,97,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,70,Healthcare affordability rate,1473,124,52,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,71,Health centers available,1171,170,45,14,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,72,Treatment costs,1367,166,50,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,73,71,65,1,0,0,0,0,128,0,-1--1--1,,1|(1228,160)|
+1,74,72,70,1,0,0,0,0,128,0,-1--1--1,,1|(1427,176)|
+1,75,26,70,1,0,0,0,0,128,0,-1--1--1,,1|(1436,69)|
+10,76,Informal Settlement Index,465,363,56,16,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,77,Urbanization Index,451,514,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,78,Sanitation index,261,498,59,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,79,Human population density,296,547,58,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,80,Region Area,453,575,40,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,81,Human Population,188,579,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,82,81,79,1,0,0,0,0,128,0,-1--1--1,,1|(239,540)|
+1,83,80,79,1,0,0,0,0,128,0,-1--1--1,,1|(372,568)|
+1,84,79,113,1,0,0,0,0,128,0,-1--1--1,,1|(366,517)|
+10,85,Infrastructure formation,757,342,44,15,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,86,85,42,1,0,0,0,0,128,0,-1--1--1,,1|(688,388)|
+10,87,Total Infected Human Population,387,29,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,88,Total VBDs deaths,347,138,40,16,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,89,Effect of infected population,1398,-98,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,90,89,31,1,0,0,0,0,128,0,-1--1--1,,1|(1310,-86)|
+10,91,Total Infected Human Population,1310,26,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,92,91,89,1,0,0,0,0,128,0,-1--1--1,,1|(1363,-17)|
+1,93,45,85,1,0,0,0,0,128,0,-1--1--1,,1|(828,314)|
+10,94,Economic growth index,833,463,49,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,95,"24 hour working system",1080,61,53,16,8,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,96,95,36,1,0,0,0,0,128,0,-1--1--1,,1|(1087,16)|
+1,97,94,42,1,0,0,0,0,128,0,-1--1--1,,1|(759,404)|
+10,98,Labor Force,942,413,50,10,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,99,98,94,1,0,0,0,0,128,0,-1--1--1,,1|(880,432)|
+10,100,Governance and Policy impact,707,489,53,17,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,101,100,94,1,0,0,0,0,128,0,-1--1--1,,1|(756,463)|
+10,102,Total Human deaths,509,121,41,14,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,103,88,102,1,0,0,0,0,128,0,-1--1--1,,1|(409,142)|
+10,104,Immigration rate,611,-92,51,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,105,Emmigration rate,730,-101,53,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,106,104,16,1,0,0,0,0,128,0,-1--1--1,,1|(650,-53)|
+10,107,informal settlement preference,360,248,59,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,108,Workers availability,1190,42,38,17,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,109,Region Employment rate,963,28,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,110,109,36,1,0,0,0,0,128,0,-1--1--1,,1|(993,-12)|
+10,111,Human Population employed,1005,-104,58,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,112,111,36,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,113,Region human management probability,382,461,75,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,114,Regional services availability,202,446,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,115,108,65,1,0,0,0,0,128,0,-1--1--1,,1|(1241,64)|
+10,116,VBD Awareness index,1251,271,55,16,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,117,48,1032,270,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,118,120,117,100,0,0,22,0,192,0,-1--1--1,,1|(1075,270)|
+1,119,120,116,4,0,0,22,0,192,0,-1--1--1,,1|(1158,270)|
+11,120,0,1114,270,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,121,Awareness increase rate,1114,291,48,13,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,122,48,1468,270,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,123,125,116,100,0,0,22,0,192,0,-1--1--1,,1|(1336,270)|
+1,124,125,122,4,0,0,22,0,192,0,-1--1--1,,1|(1418,270)|
+11,125,0,1372,270,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,126,Awareness decrease rate,1372,291,43,13,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,127,Total VBD infection cases,1026,357,64,14,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,128,VBD Awareness campains,1177,371,55,19,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,129,Local misconceptions,1361,378,51,18,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,130,127,121,1,0,0,0,0,192,0,-1--1--1,,1|(1043,317)|
+1,131,129,126,1,0,0,0,0,192,0,-1--1--1,,1|(1394,348)|
+1,132,128,121,1,0,0,0,0,192,0,-1--1--1,,1|(1158,330)|
+10,133,Waste per population,195,745,43,16,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,134,133,51,1,0,0,0,0,192,0,-1--1--1,,1|(266,756)|
+10,135,sewage treatment frequency,732,705,58,16,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,136,misconceptions spread rate,1489,359,52,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,137,136,126,1,0,0,0,0,192,0,-1--1--1,,1|(1439,321)|
+1,138,135,56,1,0,0,0,0,192,0,-1--1--1,,1|(693,746)|
+10,139,Human Health effect on emmigration,507,3,66,16,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,140,Aedes Control measures,1204,579,51,16,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,141,Sanitation index,1120,529,59,14,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,142,Treatment Measures Index,1283,522,58,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,143,VBD Awareness index,1388,573,42,17,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,144,141,140,1,0,0,0,0,192,0,-1--1--1,,1|(1156,552)|
+1,145,143,140,1,0,0,0,0,192,0,-1--1--1,,1|(1282,567)|
+1,146,142,140,1,0,0,0,0,192,0,-1--1--1,,1|(1227,546)|
+10,147,Chikungunya Infected HP,208,-7,64,20,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,148,Dengue Infected HP,241,63,60,17,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,149,YellowFever Infected HP,295,-63,66,18,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,150,148,87,1,0,0,0,0,192,0,-1--1--1,,1|(327,68)|
+1,151,147,87,1,0,0,0,0,192,0,-1--1--1,,1|(287,26)|
+1,152,149,87,1,0,0,0,0,192,0,-1--1--1,,1|(322,-10)|
+10,153,Chikungunya VBD Human deaths,240,126,69,14,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,154,Deng VBD Human deaths,258,189,53,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,155,Yellow Fever VBD Human deaths,463,206,69,21,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,156,155,88,1,0,0,0,0,192,0,-1--1--1,,1|(385,177)|
+1,157,154,88,1,0,0,0,0,192,0,-1--1--1,,1|(324,181)|
+1,158,153,88,1,0,0,0,0,192,0,-1--1--1,,1|(279,105)|
+1,159,139,16,1,0,0,0,0,192,0,-1--1--1,,1|(618,7)|
+1,160,105,16,1,0,0,0,0,192,0,-1--1--1,,1|(748,-72)|
+10,161,Host Socioeconomic Risk,1285,450,67,18,3,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,162,48,1020,444,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,163,165,162,100,0,0,22,0,192,0,-1--1--1,,1|(1075,444)|
+1,164,165,161,4,0,0,22,0,192,0,-1--1--1,,1|(1175,444)|
+11,165,0,1127,444,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,166,Risk accumulation rate,1127,468,67,16,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+12,167,48,1520,442,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,168,170,161,100,0,0,22,0,192,0,-1--1--1,,1|(1382,442)|
+1,169,170,167,4,0,0,22,0,192,0,-1--1--1,,1|(1467,442)|
+11,170,0,1419,442,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,171,Risk reduction rate,1419,464,56,14,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,172,142,171,1,0,0,0,0,192,0,-1--1--1,,1|(1361,503)|
+1,173,143,171,1,0,0,0,0,192,0,-1--1--1,,1|(1408,521)|
+10,174,Informal Settlement Index,958,477,60,15,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,175,174,166,1,0,0,0,0,192,0,-1--1--1,,1|(1051,489)|
+10,176,infrastructure development index,1486,545,63,22,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,177,176,171,1,0,0,0,0,192,0,-1--1--1,,1|(1453,484)|
+1,178,87,139,1,0,0,0,0,192,0,-1--1--1,,1|(404,-12)|
+1,179,102,139,1,0,0,0,0,192,0,-1--1--1,,1|(460,53)|
+10,180,Development monthly rate,779,537,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,181,180,94,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,182,Region growth index,516,453,47,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,183,Risk accumulation factor,1060,395,58,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,184,183,166,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,185,Human deaths daily factor,409,75,46,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,186,185,88,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,187,Sanitation Frequency,194,395,34,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,188,48,236,366,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,189,191,76,4,0,0,22,0,0,0,-1--1--1,,1|(368,366)|
+1,190,191,188,100,0,0,22,0,0,0,-1--1--1,,1|(281,366)|
+11,191,0,322,366,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,192,undermangement rate,322,393,54,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,193,187,192,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,194,114,192,1,0,0,0,0,128,0,-1--1--1,,1|(243,434)|
+1,195,78,192,1,0,0,0,0,128,0,-1--1--1,,1|(284,473)|
+1,196,113,192,1,0,0,0,0,128,0,-1--1--1,,1|(367,431)|
+12,197,48,641,517,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,198,200,77,4,0,0,22,0,0,0,-1--1--1,,1|(526,517)|
+1,199,200,197,100,0,0,22,0,0,0,-1--1--1,,1|(602,517)|
+11,200,0,568,517,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,201,Region development rate,568,544,55,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,202,42,201,1,0,0,0,0,128,0,-1--1--1,,1|(591,485)|
+1,203,182,201,1,0,0,0,0,128,0,-1--1--1,,1|(555,487)|
+10,204,Urbanization Index,527,620,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,205,Human Population,896,535,39,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,206,205,94,1,0,0,0,0,128,0,-1--1--1,,1|(892,496)|
+1,207,37,24,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,208,107,24,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,209,76,24,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,210,116,126,1,0,0,0,0,128,0,-1--1--1,,1|(1346,248)|
+1,211,25,31,1,0,0,0,0,128,0,-1--1--1,,1|(1198,-2)|
+10,212,Outdoor Vector Exposure,993,529,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,213,212,166,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,214,141,166,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,215,Infected vector occurrence,1071,586,48,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,216,215,212,1,0,0,0,0,128,0,-1--1--1,,1|(1069,543)|
+10,217,Aedes Suitability Index,866,587,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,218,DengV Infected Aedes Adults,885,637,56,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,219,ChikuV Infected Aedes Adults,1091,656,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,220,YFV Infected Aedes Adults,1222,629,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,221,217,212,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,222,218,212,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,223,219,212,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,224,220,212,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,225,Government support in medical costs,1632,181,66,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,226,Health extension services,1414,220,53,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,227,226,65,1,0,0,0,0,128,0,-1--1--1,,1|(1313,176)|
+1,228,225,70,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,229,Total Infected Human Population,953,268,64,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,230,229,127,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,231,Informal Settlement Index,295,605,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,232,Poor sanitation effect,283,650,48,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,233,Urban sanitation effect,682,602,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,234,232,51,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,235,233,56,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,236,46,56,1,0,0,0,0,128,0,-1--1--1,,1|(530,651)|
+1,237,204,233,1,0,0,0,0,128,0,-1--1--1,,1|(584,591)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Livestock View
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Livestock Population,881,84,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Livestock Births,612,86,51,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Livestock lifespan,1193,56,56,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,4,Reservoir LPopulation Deng,1194,278,44,24,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,5,48,1206,456,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,6,8,5,4,0,0,22,0,0,0,-1--1--1,,1|(1206,395)|
+1,7,8,4,100,0,0,22,0,0,0,-1--1--1,,1|(1206,314)|
+11,8,0,1206,335,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,9,Animal resistance rate,1206,362,56,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,10,Dengue V2A transmission,1073,215,43,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,11,Animal dengV antibody dvpt,1106,402,46,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,12,4,9,1,0,0,0,0,128,0,-1--1--1,,1|(1221,298)|
+1,13,11,9,1,0,0,0,0,128,0,-1--1--1,,1|(1136,329)|
+10,14,Reservoir LPopulation Chiku,932,459,46,26,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,15,48,1057,545,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,16,18,15,4,0,0,22,0,0,0,-1--1--1,,1|(1002,545)|
+1,17,18,14,100,0,0,22,0,0,0,-1--1--1,,1|(952,511)|
+11,18,0,952,545,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,19,Animal Chik resistance rate,952,572,46,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,20,Chik V2A transmission,1000,381,39,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,21,Animal ChikV antibody dvpt,1109,503,46,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,22,14,19,1,0,0,0,0,128,0,-1--1--1,,1|(986,485)|
+1,23,21,19,1,0,0,0,0,128,0,-1--1--1,,1|(1054,574)|
+10,24,Reservoir LPopulation YellowFe,754,366,47,25,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+12,25,48,754,551,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,26,28,25,4,0,0,22,0,0,0,-1--1--1,,1|(754,491)|
+1,27,28,24,100,0,0,22,0,0,0,-1--1--1,,1|(754,407)|
+11,28,0,754,431,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,29,Animal YF resistance rate,754,458,46,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,30,YF V2A transmission,615,367,39,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,31,Animal YFV antibody dvpt,640,512,44,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,32,24,29,1,0,0,0,0,128,0,-1--1--1,,1|(791,359)|
+1,33,31,29,1,0,0,0,0,128,0,-1--1--1,,1|(717,450)|
+10,34,Susceptible Livestock population,911,193,40,23,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,35,37,14,4,0,0,22,0,0,0,-1--1--1,,1|(908,375)|
+1,36,37,34,100,0,0,22,0,0,0,-1--1--1,,1|(908,258)|
+11,37,0,908,309,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,38,InfCh vector biting rate,908,336,41,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,39,41,4,4,0,0,22,0,0,0,-1--1--1,,1|(1093,274)|
+1,40,41,34,100,0,0,22,0,0,0,-1--1--1,,1|(911,274)|
+11,41,0,1030,274,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,42,Inf Deng vector biting rate,1030,301,50,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,43,45,24,4,0,0,22,0,0,0,-1--1--1,,1|(751,312)|
+1,44,45,34,100,0,0,22,0,0,0,-1--1--1,,1|(911,275)|
+11,45,0,751,275,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,46,Inf Yf Vect Biting rate,751,302,56,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,47,49,1,4,0,0,22,0,0,0,-1--1--1,,1|(700,84)|
+1,48,49,34,68,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(700,193)|
+11,49,0,700,141,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,50,Livestock birth rate,756,141,48,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,51,53,34,4,0,0,22,0,0,0,-1--1--1,,1|(1029,193)|
+1,52,53,1,68,0,0,22,2,0,0,-1--1--1,|||0-0-0,1|(1029,84)|
+11,53,0,1029,127,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,54,Livestock death rate,1088,127,51,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,55,3,54,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,56,2,50,1,0,0,0,0,128,0,-1--1--1,,1|(658,121)|
+1,57,1,50,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,58,1,54,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,59,34,46,1,0,0,0,0,128,0,-1--1--1,,1|(807,223)|
+1,60,34,38,1,0,0,0,0,128,0,-1--1--1,,1|(861,293)|
+1,61,34,42,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,62,30,46,1,0,0,0,0,128,0,-1--1--1,,1|(677,346)|
+1,63,20,38,1,0,0,0,0,128,0,-1--1--1,,1|(974,328)|
+1,64,10,42,1,0,0,0,0,128,0,-1--1--1,,1|(1029,256)|
+10,65,DengV Infected Aedes Adults,1201,185,50,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,66,ChikuV Infected Aedes Adults,1073,448,58,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,67,YFV Infected Aedes Adults,568,281,48,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,68,67,46,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,69,66,38,1,0,0,0,0,128,0,-1--1--1,,1|(972,407)|
+1,70,65,42,1,0,0,0,0,128,0,-1--1--1,,1|(1096,261)|
+10,71,Aedes Adults,510,348,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,72,Aedes Adults,1043,356,52,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,73,71,46,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,74,72,42,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,75,72,38,1,0,0,0,0,128,0,-1--1--1,,1|(973,316)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*VBD transmissions Aedes
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,100,0
+10,1,Susceptible Human Population,849,163,86,40,3,131,0,24,0,0,0,0,-1--1--1,255-0-255,|18|B|0-0-0,0,0,0,0,0,0
+10,2,Dengue Exposed HP,846,290,90,33,3,131,0,28,0,0,0,0,-1--1--1,64-160-98,|18|B|0-0-0,0,0,0,0,0,0
+10,3,Dengue Infected HP,887,451,103,36,3,131,0,28,0,0,0,0,-1--1--1,64-160-98,|18|B|0-0-0,0,0,0,0,0,0
+10,4,Dengue Recovered HP,891,598,102,33,3,131,0,28,0,0,0,0,-1--1--1,64-160-98,|18|B|0-0-0,0,0,0,0,0,0
+1,5,7,3,4,0,0,22,0,0,0,-1--1--1,,1|(830,390)|
+1,6,7,2,100,0,0,22,0,0,0,-1--1--1,,1|(830,338)|
+11,7,0,830,360,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,8,Den Ae intriscic incubation rate,889,360,51,19,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,9,11,4,4,0,0,22,0,0,0,-1--1--1,,1|(855,552)|
+1,10,11,3,100,0,0,22,0,0,0,-1--1--1,,1|(855,507)|
+11,11,0,855,534,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,12,Deng PP recovery rate,904,534,41,14,40,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,13,2,8,1,0,0,0,0,128,0,-1--1--1,,1|(905,321)|
+1,14,3,12,1,0,0,0,0,128,0,-1--1--1,,1|(887,473)|
+10,15,Deng Intrinsic incubation period,1005,399,55,26,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,16,15,8,1,0,0,0,0,128,0,-1--1--1,,1|(932,400)|
+10,17,Deng Exp Humans mortality,565,217,54,16,8,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,18,Deng Inf mortality,699,522,56,11,8,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,19,Human Deng Immune system recovery rate,1040,574,51,32,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,20,19,12,1,0,0,0,0,128,0,-1--1--1,,1|(971,556)|
+10,21,Risk of Dengue Infection,675,222,48,14,8,2,0,11,-1,0,0,0,128-128-128,0-0-0,|10||128-128-128,0,0,0,0,0,0
+10,22,Implemented Dengue control measures,1092,708,49,32,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,23,Deng VBD Human deaths,635,406,66,26,3,131,0,8,0,1,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,24,26,23,4,0,0,22,0,0,0,-1--1--1,,1|(613,334)|
+1,25,26,2,100,0,0,22,0,0,0,-1--1--1,,1|(687,281)|
+11,26,0,613,281,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,27,Deng Exposed induced mortality rate,613,303,61,14,40,131,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,28,30,23,4,0,0,22,0,0,0,-1--1--1,,1|(750,406)|
+1,29,30,3,100,0,0,22,0,0,0,-1--1--1,,1|(770,437)|
+11,30,0,750,437,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,31,Den PP induced mortality rate,750,464,58,19,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,32,17,27,1,0,0,0,0,128,0,-1--1--1,,1|(527,288)|
+1,33,2,27,1,0,0,0,0,128,0,-1--1--1,,1|(720,327)|
+1,34,18,31,1,0,0,0,0,128,0,-1--1--1,,1|(713,497)|
+1,35,3,31,1,0,0,0,0,128,0,-1--1--1,,1|(778,412)|
+10,36,Deng Aedes Competence,988,283,64,13,8,2,0,11,-1,0,0,0,128-128-128,0-0-0,|10||128-128-128,0,0,0,0,0,0
+10,37,Dengue Prevalance,1064,633,47,15,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,38,Dengue Applied treatment measure,1015,504,58,18,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,39,38,12,1,0,0,0,0,192,0,-1--1--1,,1|(980,532)|
+10,40,Chikungunya Exposed HP,1395,277,100,37,3,131,0,28,0,0,0,0,-1--1--1,255-128-0,|18|B|0-0-0,0,0,0,0,0,0
+10,41,Chikungunya Infected HP,1425,442,91,32,3,131,0,28,0,0,0,0,-1--1--1,255-128-0,|18|B|0-0-0,0,0,0,0,0,0
+10,42,Chikungunya Recovered HP,1408,614,103,31,3,131,0,28,0,0,0,0,-1--1--1,255-128-0,|18|B|0-0-0,0,0,0,0,0,0
+1,43,45,41,4,0,0,22,0,0,0,-1--1--1,,1|(1380,384)|
+1,44,45,40,100,0,0,22,0,0,0,-1--1--1,,1|(1380,330)|
+11,45,0,1380,353,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,46,Chikufever intriscic incubation rate,1438,353,50,22,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,47,49,42,4,0,0,22,0,0,0,-1--1--1,,1|(1392,552)|
+1,48,49,41,100,0,0,22,0,0,0,-1--1--1,,1|(1392,492)|
+11,49,0,1392,516,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,50,Chiku PP recovery rate,1441,516,41,23,40,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,51,40,46,1,0,0,0,0,128,0,-1--1--1,,1|(1476,265)|
+1,52,41,50,1,0,0,0,0,128,0,-1--1--1,,1|(1369,449)|
+10,53,Chiku Intrinsic incubation period,1549,400,56,23,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,54,53,46,1,0,0,0,0,128,0,-1--1--1,,1|(1472,400)|
+10,55,Chikufever exposed mortalities,1238,257,43,18,8,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,56,Chikufever infected mortalities,1245,354,59,12,8,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,57,Human Chiku Immune system,1275,523,47,15,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,58,57,50,1,0,0,0,0,128,0,-1--1--1,,1|(1343,537)|
+10,59,Chikungunya control measures efficiency,1569,539,63,26,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,60,Chikungunya VBD Human deaths,1137,424,64,26,3,131,0,8,0,1,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,61,63,60,4,0,0,22,0,0,0,-1--1--1,,1|(1158,347)|
+1,62,63,40,100,0,0,22,0,0,0,-1--1--1,,1|(1229,288)|
+11,63,0,1158,288,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,64,Chiku Exposed induced mortality rate,1158,310,63,14,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,65,67,60,4,0,0,22,0,0,0,-1--1--1,,1|(1238,431)|
+1,66,67,41,100,0,0,22,0,0,0,-1--1--1,,1|(1311,431)|
+11,67,0,1282,431,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,68,Chiku PP induced mortality rate,1282,452,53,13,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,69,55,64,1,0,0,0,0,128,0,-1--1--1,,1|(1191,271)|
+1,70,40,64,1,0,0,0,0,128,0,-1--1--1,,1|(1269,299)|
+1,71,56,68,1,0,0,0,0,128,0,-1--1--1,,1|(1271,388)|
+1,72,41,68,1,0,0,0,0,128,0,-1--1--1,,1|(1325,406)|
+10,73,Chiku Prevalance,1569,682,40,14,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,74,Chikufever Applied treatment measures,1567,478,62,22,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,75,74,50,1,0,0,0,0,192,0,-1--1--1,,1|(1513,505)|
+10,76,YellowFever Exposed HP,275,283,106,34,3,131,0,28,0,0,0,0,-1--1--1,0-255-255,|18|B|0-0-0,0,0,0,0,0,0
+10,77,YellowFever Infected HP,247,493,103,30,3,131,0,28,0,0,0,0,-1--1--1,0-255-255,|18|B|0-0-0,0,0,0,0,0,0
+10,78,YellowFever Recovered HP,258,640,103,25,3,131,0,28,0,0,0,0,-1--1--1,0-255-255,|18|B|0-0-0,0,0,0,0,0,0
+1,79,81,77,4,0,0,22,0,0,0,-1--1--1,,1|(256,429)|
+1,80,81,76,100,0,0,22,0,0,0,-1--1--1,,1|(256,350)|
+11,81,0,256,390,8,6,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,82,YF intriscic incubation rate,256,413,45,17,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,83,85,78,4,0,0,22,0,0,0,-1--1--1,,1|(269,582)|
+1,84,85,77,100,0,0,22,0,0,0,-1--1--1,,1|(269,530)|
+11,85,0,269,544,8,6,33,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,86,YF PP recovery rate,269,570,33,20,40,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,87,76,82,1,0,0,0,0,128,0,-1--1--1,,1|(190,348)|
+1,88,77,86,1,0,0,0,0,128,0,-1--1--1,,1|(263,514)|
+10,89,YF Intrinsic incubation period,149,433,39,22,8,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,90,89,82,1,0,0,0,0,128,0,-1--1--1,,1|(189,445)|
+10,91,YF exposed mortalities,307,373,38,16,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,92,Yellow fever infected deaths,452,545,46,20,8,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,93,Human YF Immune system response rate,163,576,56,19,8,131,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,94,93,86,1,0,0,0,0,128,0,-1--1--1,,1|(208,533)|
+10,95,Yellow fever control measures,438,732,51,19,8,3,0,8,0,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,96,Yellow Fever VBD Human deaths,523,487,55,22,3,131,0,8,0,1,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,97,99,96,4,0,0,22,0,0,0,-1--1--1,,1|(457,487)|
+1,98,99,76,100,0,0,22,0,0,0,-1--1--1,,1|(457,283)|
+11,99,0,457,384,6,8,33,3,0,0,2,0,0,0,0,0,0,0,0,0
+10,100,YF Exposed induced mortality rate,411,384,40,19,40,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,101,103,96,4,0,0,22,0,0,0,-1--1--1,,1|(448,486)|
+1,102,103,77,100,0,0,22,0,0,0,-1--1--1,,1|(383,486)|
+11,103,0,423,486,6,8,33,3,0,0,2,0,0,0,0,0,0,0,0,0
+10,104,YF PP induced mortality rate,381,486,36,22,40,131,0,8,-1,1,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,105,91,100,1,0,0,0,0,128,0,-1--1--1,,1|(341,404)|
+1,106,76,100,1,0,0,0,0,128,0,-1--1--1,,1|(368,318)|
+1,107,92,104,1,0,0,0,0,128,0,-1--1--1,,1|(445,499)|
+1,108,77,104,1,0,0,0,0,128,0,-1--1--1,,1|(321,442)|
+10,109,Yellow Fever Prevalance,561,727,38,16,8,3,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+10,110,YEllow Fever Applied treatment measures efficiency,401,591,66,20,8,131,0,8,-1,0,0,0,0-0-0,0-0-0,|10||0-0-0,0,0,0,0,0,0
+1,111,110,86,1,0,0,0,0,192,0,-1--1--1,,1|(358,552)|
+10,112,Risk of Chikungunya Infection,1584,271,74,19,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,113,Aedes Chiku Competence,1569,220,59,16,8,130,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,114,Risk of Yellow Fever Infection,439,260,59,17,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,115,YF Aedes Competence,436,230,66,15,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+12,116,48,643,601,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,117,119,4,100,0,0,22,0,192,0,-1--1--1,,1|(769,601)|
+1,118,119,116,4,0,0,22,0,192,0,-1--1--1,,1|(695,601)|
+11,119,0,744,601,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,120,Deng R mortality rate,744,630,49,21,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,121,48,1172,595,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,122,124,42,100,0,0,22,0,192,0,-1--1--1,,1|(1289,595)|
+1,123,124,121,4,0,0,22,0,192,0,-1--1--1,,1|(1222,595)|
+11,124,0,1268,595,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,125,Chiku R mortality rate,1268,618,46,15,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,126,48,270,744,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,127,129,78,100,0,0,22,0,192,0,-1--1--1,,1|(270,679)|
+1,128,129,126,4,0,0,22,0,192,0,-1--1--1,,1|(270,721)|
+11,129,0,270,700,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,130,YF R mortality rate,322,700,44,23,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,131,YF R mortality probability,176,695,48,26,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,132,Chiku R mortality probability,1212,676,59,16,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+10,133,Deng R mortality probability,617,551,56,16,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,134,131,129,1,0,0,0,0,192,0,-1--1--1,,1|(230,732)|
+1,135,78,130,1,0,0,0,0,192,0,-1--1--1,,1|(242,677)|
+1,136,133,120,1,0,0,0,0,192,0,-1--1--1,,1|(715,570)|
+1,137,4,120,1,0,0,0,0,192,0,-1--1--1,,1|(796,558)|
+1,138,42,125,1,0,0,0,0,192,0,-1--1--1,,1|(1303,589)|
+1,139,132,125,1,0,0,0,0,192,0,-1--1--1,,1|(1199,628)|
+10,140,Delay YF I,152,356,35,14,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,141,140,82,1,0,0,0,0,192,0,-1--1--1,,1|(195,393)|
+10,142,Delay Deng I,1028,347,49,26,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,143,Delay Chiku I,1566,353,43,18,8,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,144,142,8,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,145,143,46,1,0,0,0,0,192,0,-1--1--1,,1|(1515,345)|
+12,146,48,1625,607,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,147,149,146,4,0,0,22,0,0,0,-1--1--1,,1|(1590,607)|
+1,148,149,42,100,0,0,22,0,0,0,-1--1--1,,1|(1532,607)|
+11,149,0,1560,607,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,150,Chiku recovered susceptability rate,1560,634,57,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,151,48,872,725,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,152,154,151,4,0,0,22,0,0,0,-1--1--1,,1|(872,700)|
+1,153,154,4,100,0,0,22,0,0,0,-1--1--1,,1|(872,651)|
+11,154,0,872,678,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,155,Deng recovered susceptability rate,937,678,57,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,156,48,547,629,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,157,159,156,4,0,0,22,0,0,0,-1--1--1,,1|(494,629)|
+1,158,159,78,100,0,0,22,0,0,0,-1--1--1,,1|(400,629)|
+11,159,0,446,629,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,160,YF recovered susceptability rate,446,656,57,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,161,78,160,1,0,0,0,0,128,0,-1--1--1,,1|(362,680)|
+1,162,42,150,1,0,0,0,0,128,0,-1--1--1,,1|(1491,571)|
+1,163,95,160,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,164,109,160,1,0,0,0,0,128,0,-1--1--1,,1|(498,705)|
+1,165,37,155,1,0,0,0,0,128,0,-1--1--1,,1|(989,644)|
+1,166,22,155,1,0,0,0,0,128,0,-1--1--1,,1|(1025,712)|
+1,167,73,150,1,0,0,0,0,128,0,-1--1--1,,1|(1618,676)|
+1,168,59,150,1,0,0,0,0,128,0,-1--1--1,,1|(1560,585)|
+10,169,Aedes VBD recovered rate,629,685,47,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,170,160,169,1,0,0,0,0,128,0,-1--1--1,,1|(535,659)|
+1,171,155,169,1,0,0,0,0,128,0,-1--1--1,,1|(782,672)|
+10,172,Chiku recovered susceptability rate,772,719,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,173,172,169,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,174,Monthly risk factor,1101,260,60,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,175,4,155,1,0,0,0,0,128,0,-1--1--1,,1|(932,625)|
+1,176,178,76,4,0,0,22,0,0,0,-1--1--1,,1|(221,216)|
+1,177,178,1,100,0,0,22,0,0,0,-1--1--1,,1|(495,176)|
+11,178,0,221,176,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,179,YF Bitin rate,221,196,46,12,40,131,0,0,-1,0,0,0,0,0,0,0,0,0
+1,180,182,2,4,0,0,22,0,0,0,-1--1--1,,1|(831,240)|
+1,181,182,1,100,0,0,22,0,0,0,-1--1--1,,1|(831,207)|
+11,182,0,831,217,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,183,Dengue Biting rate,897,217,58,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,184,186,40,4,0,0,22,0,0,0,-1--1--1,,1|(1393,211)|
+1,185,186,1,100,0,0,22,0,0,0,-1--1--1,,1|(1161,175)|
+11,186,0,1393,175,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,187,Chiku Biting rates,1393,194,56,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,188,115,179,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,189,1,179,1,0,0,0,0,128,0,-1--1--1,,1|(392,141)|
+1,190,1,182,1,0,0,0,0,128,0,-1--1--1,,1|(748,216)|
+1,191,36,183,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,192,113,187,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,193,1,187,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,194,174,183,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,195,174,187,1,0,0,0,0,128,0,-1--1--1,,1|(1229,213)|
+10,196,Human birth rate,1007,139,44,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,197,Human Death rate,1065,220,49,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,198,196,1,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,199,Monthly risk factor,482,203,45,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,200,199,179,1,0,0,0,0,128,0,-1--1--1,,1|(357,189)|
+10,201,Human Population,849,222,39,19,8,2,1,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,202,201,1,0,1,0,0,0,64,1,-1--1--1,,1|(0,0)|
+10,203,YF recovered susceptability rate,947,86,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,204,Deng recovered susceptability rate,784,72,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,205,Chiku recovered susceptability rate,623,144,61,19,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,206,204,1,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,207,203,1,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,208,205,1,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,209,197,1,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+///---\\\
+:GRAPH Deng_Vector_SEI
+:TITLE Aedes Dengue Infection
+:SCALE
+:VAR DengV Exposed Aedes Adults|Dengue Exposed vectors
+:UNITS Aedes/Km2
+:DATASET 
+:VAR DengV Infected Aedes Adults|Dengue Exposed vectors
+:UNITS Aedes/Km2
+:DATASET 
+
+:GRAPH ChikuV_Vector_SEI
+:TITLE Aedes Chikungunya Infection dynamics
+:SCALE
+:VAR ChikuV Exposed Aedes Adults|Chikungunya Exposed Vectors
+:UNITS Aedes/Km2
+:DATASET 
+:VAR ChikuV Infected Aedes Adults|Chikungunya Infected Vectors
+:UNITS Aedes/Km2
+:DATASET 
+
+:GRAPH Yellow_Fever_Vector_SEI
+:TITLE Yellow Fever Vector Infection Dynamics
+:SCALE
+:VAR YFV Exposed Aedes Adults|Yellow Fever Exposed Aedes Adult
+:UNITS Aedes/Km2
+:DATASET 
+:VAR YFV Infected Aedes Adults|Yellow Fever Infected Aedes Adults
+:UNITS Aedes/Km2
+:DATASET 
+
+:GRAPH Aedes_Life_cycle
+:TITLE Aedes Life cycle
+:SCALE
+:VAR Aedes Adults|Aedes Adults
+:DATASET 
+:VAR Aedes Eggs|Aedes Eggs
+:DATASET 
+:VAR Aedes Larva|Aedes Larva
+:DATASET 
+:VAR Aedes Pupa|Aedes Pupa
+:DATASET 
+
+:GRAPH Human_Pop_Dynamics
+:TITLE Human_Pop_Dynamics
+:SCALE
+:VAR Human Population
+:DATASET 
+:VAR Labor Force
+:DATASET 
+:VAR Informal settlements Population
+:DATASET 
+
+:GRAPH Deng_SEIR
+:TITLE Dengue Virus SEIR
+:SCALE
+:VAR Dengue Exposed HP|Dengue Exposed Human Population
+:DATASET 
+:VAR Dengue Infected HP|Dengue Infected Human Population
+:DATASET 
+:VAR Dengue Recovered HP|Dengue Recovered Human Population
+:DATASET 
+
+:GRAPH ChikuV_SEIR
+:TITLE Chikungunya Virus SEIR
+:SCALE
+:VAR Chikungunya Exposed HP|Chikungunya Exposed Human Population
+:DATASET 
+:VAR Chikungunya Infected HP|Chikungunya Infected Human Population
+:DATASET 
+:VAR Chikungunya Recovered HP|Chikungunya Recovered Human Population
+:DATASET 
+
+:GRAPH YF_SEIR
+:TITLE Yellow Fever Virus SEIR
+:SCALE
+:VAR YellowFever Exposed HP|Yellow Fever Exposed Human Population
+:DATASET 
+:VAR YellowFever Infected HP|Yellow Fever Infected Human Population
+:DATASET 
+:VAR YellowFever Recovered HP|Yellow Fever Recovered Human Population
+:DATASET 
+
+:GRAPH Livestock_Dynamics
+:TITLE Livestock Reservoir Dynamics
+:SCALE
+:VAR Livestock Population
+:DATASET 
+:VAR Susceptible Livestock population
+:DATASET 
+:SCALE
+:VAR Reservoir LPopulation Chiku
+:DATASET 
+:VAR Reservoir LPopulation Deng
+:DATASET 
+:VAR Reservoir LPopulation YellowFe
+:DATASET 
+
+:GRAPH Livestock_Dynamics_P0
+:TITLE Livestock PopulationsDynamics
+:SCALE
+:VAR Livestock Population
+:DATASET 
+:VAR Susceptible Livestock population
+:DATASET 
+
+:GRAPH Livestock_Dynamics_Reserve
+:TITLE Livestock Reservoir Dynamics
+:SCALE
+:VAR Reservoir LPopulation YellowFe
+:DATASET 
+:VAR Reservoir LPopulation Deng
+:DATASET 
+:VAR Reservoir LPopulation Chiku
+:DATASET 
+
+:GRAPH Susceptible_Aedes_Adults
+:TITLE Susceptible Aedes Adults
+:SCALE
+:VAR Susceptible Female Aedes Adults
+:UNITS Aedes/Km2
+:DATASET 
+:L<%^E!@
+1:Current.vdfx
+4:Time
+5:Regional Precipitation
+9:Aedes v2
+19:100,0
+24:0
+25:599
+26:599
+23:0
+15:0,0,0,0,0,0
+27:2,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:Jan-YYYY
+37:2015
+38:1
+39:1
+40:2
+41:1
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Vensim Sans|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
